@@ -1,0 +1,174 @@
+package apresentation;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import model.Usuario;
+import persistence.UsuarioDB;
+
+/**
+ * Classe Login - Interface gráfica para autenticação de utilizadores.
+ * Permite o acesso ao sistema ConfortAnimal mediante nome de utilizador e senha válidos.
+ * Após login bem-sucedido, redireciona para a tela principal.
+ * 
+ * Esta classe utiliza Swing (JFrame) e foi parcialmente gerada por IDE.
+ * 
+ * @author Lucas
+ */
+public class Login extends javax.swing.JFrame {
+
+    /**
+     * Construtor padrão da janela de login.
+     */
+    public Login() {
+        initComponents();
+        setLocationRelativeTo(null);
+        setTitle("ConfortAnimal - Login");
+    }
+
+    /**
+     * Construtor auxiliar (caso seja necessário receber parâmetros).
+     * @param aThis Referência à janela principal.
+     * @param b Flag de controle (não utilizado).
+     */
+    Login(ConfortAnimal aThis, boolean b) {
+        this();
+    }
+
+
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jTextField1 = new javax.swing.JTextField();
+        passwordPanel = new javax.swing.JPanel();
+        lbPassword = new javax.swing.JLabel();
+        txtPassword = new javax.swing.JPasswordField();
+        lbNome = new javax.swing.JLabel();
+        txtUtilizador = new javax.swing.JFormattedTextField();
+        btnGuardar = new javax.swing.JButton();
+
+        jTextField1.setText("jTextField1");
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        lbPassword.setText("Senha:");
+
+        lbNome.setText("Utilizador:");
+
+        btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout passwordPanelLayout = new javax.swing.GroupLayout(passwordPanel);
+        passwordPanel.setLayout(passwordPanelLayout);
+        passwordPanelLayout.setHorizontalGroup(
+            passwordPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(passwordPanelLayout.createSequentialGroup()
+                .addGap(65, 65, 65)
+                .addGroup(passwordPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbNome, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lbPassword, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(passwordPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtPassword)
+                    .addComponent(txtUtilizador, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(88, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, passwordPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        passwordPanelLayout.setVerticalGroup(
+            passwordPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(passwordPanelLayout.createSequentialGroup()
+                .addGap(77, 77, 77)
+                .addGroup(passwordPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbNome, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtUtilizador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(passwordPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 217, Short.MAX_VALUE)
+                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(passwordPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(passwordPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+    private void fazerLogin() {
+           try {
+            String user = txtUtilizador.getText().trim();
+            String pass = new String(txtPassword.getPassword());
+
+            UsuarioDB user_login = new UsuarioDB();
+
+            Usuario u;
+            u = user_login.fazerLogin(user, pass);
+
+            JOptionPane.showMessageDialog(rootPane, "Bem-Vindo, " + u.getNomeCompleto());
+            
+        } catch (exception.ProjetoException ex) {
+            // exception.Exception 
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Erro", JOptionPane.WARNING_MESSAGE);
+        }
+    }
+
+    /**
+     * Ação do botão Entrar (antes chamado btnGuardar)
+     */
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+          try {
+            dispose();
+            fazerLogin();
+        } catch (Exception ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
+        ConfortAnimal janela;
+        janela = new ConfortAnimal();
+        
+        janela.setVisible(true);
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(() -> {
+            new Login().setVisible(true);
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnGuardar;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JLabel lbNome;
+    private javax.swing.JLabel lbPassword;
+    private javax.swing.JPanel passwordPanel;
+    private javax.swing.JPasswordField txtPassword;
+    private javax.swing.JFormattedTextField txtUtilizador;
+    // End of variables declaration//GEN-END:variables
+
+}
