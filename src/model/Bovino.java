@@ -4,12 +4,19 @@ package model;
  * Classe Bovino - representa um animal do tipo bovino.
  * Esta classe herda da superclasse {@link Animal} e adiciona propriedades específicas
  * como raça, linhagem e produção de leite.
- * 
+ *
  * HERANÇA: Bovino possui todos os atributos de Animal + os seus próprios.
- * 
+ *
+ * NOTA (Base de Dados):
+ * No schema atual, Bovino está ligado ao Animal por 1:1 através de animal_id.
+ * Por isso, este modelo guarda também o animalId (FK) quando necessário.
+ *
  * @author Lucas
  */
 public class Bovino extends Animal {
+
+    /** ID do animal na tabela "animal" (chave estrangeira em bovino.animal_id). */
+    private int animalId;
 
     /** Raça do bovino (ex: Holstein, Charolês) */
     private String raca;
@@ -29,10 +36,10 @@ public class Bovino extends Animal {
     }
 
     /**
-     * Construtor completo.
+     * Construtor completo (usado principalmente quando você já tem dados completos).
      * Inicializa todos os atributos herdados e específicos.
-     * 
-     * @param id ID do animal.
+     *
+     * @param id ID do bovino/animal (dependendo de como você está a usar na app).
      * @param nome Nome do bovino.
      * @param peso Peso em kg.
      * @param idade Idade em meses.
@@ -46,6 +53,42 @@ public class Bovino extends Animal {
         this.raca = raca;
         this.linhagem = linhagem;
         this.setProducaoLeite(producaoLeite);
+
+        // quando usamos este construtor, normalmente o id do Animal já é conhecido
+        this.animalId = id;
+    }
+
+    /**
+     * Construtor usado no registo de bovino (schema com tabelas separadas).
+     * Aqui você já inseriu o Animal e recebeu o animalId gerado.
+     *
+     * @param animalId ID gerado na tabela animal.
+     * @param raca Raça do bovino.
+     * @param linhagem Linhagem (LEITE, CARNE, DUPLA_APTIDAO).
+     * @param producaoLeite Produção de leite em litros por dia.
+     */
+    public Bovino(int animalId, String raca, String linhagem, double producaoLeite) {
+        super(); // não temos ainda dados completos de Animal aqui
+        this.animalId = animalId;
+        this.raca = raca;
+        this.linhagem = linhagem;
+        this.setProducaoLeite(producaoLeite);
+    }
+
+    /**
+     * Retorna o ID do animal associado (FK para a tabela animal).
+     * @return animalId
+     */
+    public int getAnimalId() {
+        return animalId;
+    }
+
+    /**
+     * Define o ID do animal associado (FK para a tabela animal).
+     * @param animalId id do animal
+     */
+    public void setAnimalId(int animalId) {
+        this.animalId = animalId;
     }
 
     /**
@@ -101,13 +144,43 @@ public class Bovino extends Animal {
     }
 
     /**
+     * Define o peso do bovino.
+     * Este método existe porque sua IDE criou um "stub" e isso causa erro.
+     * Aqui, nós validamos e guardamos o peso no atributo herdado de Animal.
+     *
+     * @param peso Peso em kg (deve ser > 0).
+     * @throws IllegalArgumentException se o peso for inválido.
+     */
+    public void setPeso(double peso) {
+        if (peso <= 0) {
+            throw new IllegalArgumentException("O peso deve ser maior que 0.");
+        }
+        this.peso = peso;
+    }
+
+    /**
+     * Define a idade do bovino.
+     * Aqui guardamos no atributo herdado de Animal.
+     *
+     * @param idade Idade em meses (não pode ser negativa).
+     * @throws IllegalArgumentException se a idade for inválida.
+     */
+    public void setIdade(int idade) {
+        if (idade < 0) {
+            throw new IllegalArgumentException("A idade não pode ser negativa.");
+        }
+        this.idade = idade;
+    }
+
+    /**
      * Retorna uma representação textual do bovino.
      * @return String com os dados do bovino.
      */
     @Override
     public String toString() {
         return "Bovino{" +
-                "id=" + id +
+                "animalId=" + animalId +
+                ", id=" + id +
                 ", nome='" + nome + '\'' +
                 ", peso=" + peso +
                 ", idade=" + idade +
@@ -124,13 +197,5 @@ public class Bovino extends Animal {
     public String getDescricaoCompleta() {
         return String.format("Bovino %s da raça %s, pesando %.1f kg, com %d meses de idade e produção de %.1f litros/dia",
                 nome, raca, peso, idade, producaoLeite);
-    }
-
-    public void setPeso(double parseDouble) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    public void setIdade(int parseInt) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

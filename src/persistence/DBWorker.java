@@ -1,5 +1,4 @@
 package persistence;
-
 import model.Animal;
 
 import java.sql.*;
@@ -78,8 +77,12 @@ public class DBWorker {
      */
     public void fechar() {
         try {
-            if (st != null) st.close();
-            if (con != null) con.close();
+            if (st != null) {
+                st.close();
+                    }
+            if (con != null){
+                con.close();
+            } 
             System.out.println("Conexão encerrada.");
         } catch (SQLException ex) {
             System.out.println("Erro ao fechar conexão: " + ex.getMessage());

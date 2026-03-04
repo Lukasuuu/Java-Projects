@@ -1,0 +1,423 @@
+========================================
+  RELACIONAMENTOS NO CÓDIGO JAVA
+  Exemplos Práticos
+========================================
+
+Este documento mostra como os relacionamentos
+funcionam no código Java do projeto.
+
+
+========================================
+  RELACIONAMENTO 1: ANIMAL → BOVINO
+  Tipo: HERANÇA (1:1)
+========================================
+
+NO JAVA:
+--------
+public class Bovino extends Animal {
+    private int bovinoId;
+    private int animalId;  // FK para animal
+    private String raca;
+    // ...
+}
+
+INSERIR UM BOVINO (2 tabelas):
+-------------------------------
+public boolean inserir(Bovino bovino) {
+    Connection con = Conexao.getConexao();
+    con.setAutoCommit(false);
+    
+    try {
+        // PASSO 1: Inserir na tabela ANIMAL (PAI)
+        String sqlAnimal = "INSERT INTO animal (nome, peso, idade) VALUES (?, ?, ?)";
+        PreparedStatement psAnimal = con.prepareStatement(sqlAnimal, Statement.RETURN_GENERATED_KEYS);
+        psAnimal.setString(1, bovino.getNome());
+        psAnimal.setDouble(2, bovino.getPeso());
+        psAnimal.setInt(3, bovino.getIdade());
+        psAnimal.executeUpdate();
+        
+        // Obter o ID gerado do animal
+        ResultSet rs = psAnimal.getGeneratedKeys();
+        int animalId = 0;
+        if (rs.next()) {
+            animalId = rs.getInt(1);
+        }
+        
+        // PASSO 2: Inserir na tabela BOVINO (FILHO)
+        String sqlBovino = "INSERT INTO bovino (animal_id, raca, linhagem, producao_leite) VALUES (?, ?, ?, ?)";
+        PreparedStatement psBovino = con.prepareStatement(sqlBovino);
+        psBovino.setInt(1, animalId);  // FK
+        psBovino.setString(2, bovino.getRaca());
+        psBovino.setString(3, bovino.getLinhagem());
+        psBovino.setDouble(4, bovino.getProducaoLeite());
+        psBovino.executeUpdate();
+        
+        con.commit();
+        return true;
+        
+    } catch (SQLException e) {
+        con.rollback();
+        throw new ConexaoBDException("Erro ao inserir bovino", e);
+    }
+}
+
+BUSCAR UM BOVINO (com JOIN):
+-----------------------------
+public Bovino buscarPorId(int bovinoId) {
+    String sql = "SELECT b.id, b.animal_id, a.nome, a.peso, a.idade, b.raca, b.linhagem, b.producao_leite " +
+                 "FROM bovino b " +
+                 "INNER JOIN animal a ON b.animal_id = a.id " +
+                 "WHERE b.id = ?";
+    
+    PreparedStatement ps = con.prepareStatement(sql);
+    ps.setInt(1, bovinoId);
+    ResultSet rs = ps.executeQuery();
+    
+    if (rs.next()) {
+        return new Bovino(
+            rs.getInt("id"),           // bovinoId
+            rs.getInt("animal_id"),    // animalId (FK)
+            rs.getString("nome"),      // do ANIMAL
+            rs.getDouble("peso"),      // do ANIMAL
+            rs.getInt("idade"),        // do ANIMAL
+            rs.getString("raca"),      // do BOVINO
+            rs.getString("linhagem"),  // do BOVINO
+            rs.getDouble("producao_leite") // do BOVINO
+        );
+    }
+    return null;
+}
+
+APAGAR UM BOVINO (CASCADE automático):
+---------------------------------------
+public boolean apagar(int bovinoId) {
+    // Apagar bovino → animal apaga automaticamente por CASCADE
+    String sql = "DELETE FROM bovino WHERE id = ?";
+    PreparedStatement ps = con.prepareStatement(sql);
+    ps.setInt(1, bovinoId);
+    ps.executeUpdate();
+    return true;
+}
+
+
+========================================
+  RELACIONAMENTO 2: BOVINO → AVALIACAO
+  Tipo: UM PARA MUITOS (1:N)
+========================================
+
+NO JAVA:
+--------
+public class Avaliacao {
+    private int id;
+    private int bovinoId;     // FK para bovino
+    private int ambienteId;   // FK para ambiente
+    private double valorITU;
+    private String resultado;
+    // ...
+}
+
+INSERIR UMA AVALIAÇÃO:
+----------------------
+public boolean inserir(Avaliacao avaliacao) {
+    // VALIDAÇÃO: Bovino deve existir!
+    Bovino bovino = bovinoDAO.buscarPorId(avaliacao.getBovinoId());
+    if (bovino == null) {
+        throw new EntidadeNaoEncontradaException("Bovino não existe!");
+    }
+    
+    // VALIDAÇÃO: Ambiente deve existir!
+    Ambiente ambiente = ambienteDAO.buscarPorId(avaliacao.getAmbienteId());
+    if (ambiente == null) {
+        throw new EntidadeNaoEncontradaException("Ambiente não existe!");
+    }
+    
+    String sql = "INSERT INTO avaliacao (bovino_id, ambiente_id, valor_itu, resultado, data_avaliacao) " +
+                 "VALUES (?, ?, ?, ?, NOW())";
+    
+    PreparedStatement ps = con.prepareStatement(sql);
+    ps.setInt(1, avaliacao.getBovinoId());     // FK
+    ps.setInt(2, avaliacao.getAmbienteId());   // FK
+    ps.setDouble(3, avaliacao.getValorITU());
+    ps.setString(4, avaliacao.getResultado());
+    ps.executeUpdate();
+    
+    return true;
+}
+
+BUSCAR AVALIAÇÕES DE UM BOVINO:
+--------------------------------
+public ArrayList<Avaliacao> buscarPorBovino(int bovinoId) {
+    String sql = "SELECT * FROM avaliacao WHERE bovino_id = ? ORDER BY data_avaliacao DESC";
+    
+    PreparedStatement ps = con.prepareStatement(sql);
+    ps.setInt(1, bovinoId);
+    ResultSet rs = ps.executeQuery();
+    
+    ArrayList<Avaliacao> lista = new ArrayList<>();
+    while (rs.next()) {
+        Avaliacao av = new Avaliacao(
+            rs.getInt("id"),
+            rs.getInt("bovino_id"),
+            rs.getInt("ambiente_id"),
+            rs.getDouble("valor_itu"),
+            rs.getString("resultado"),
+            rs.getString("data_avaliacao")
+        );
+        lista.add(av);
+    }
+    
+    return lista;
+}
+
+EXEMPLO DE USO NA INTERFACE:
+-----------------------------
+// Buscar todas as avaliações de um bovino específico
+int bovinoId = 1; // Mimosa
+AvaliacaoDAO avaliacaoDAO = new AvaliacaoDAO();
+ArrayList<Avaliacao> avaliacoes = avaliacaoDAO.buscarPorBovino(bovinoId);
+
+System.out.println("Avaliações do bovino " + bovinoId + ":");
+for (Avaliacao av : avaliacoes) {
+    System.out.println("- ITU: " + av.getValorITU() + ", Resultado: " + av.getResultado());
+}
+
+
+========================================
+  RELACIONAMENTO 3: AMBIENTE → AVALIACAO
+  Tipo: UM PARA MUITOS (1:N)
+========================================
+
+BUSCAR AVALIAÇÕES DE UM AMBIENTE:
+----------------------------------
+public ArrayList<Avaliacao> buscarPorAmbiente(int ambienteId) {
+    String sql = "SELECT * FROM avaliacao WHERE ambiente_id = ? ORDER BY data_avaliacao DESC";
+    
+    PreparedStatement ps = con.prepareStatement(sql);
+    ps.setInt(1, ambienteId);
+    ResultSet rs = ps.executeQuery();
+    
+    ArrayList<Avaliacao> lista = new ArrayList<>();
+    while (rs.next()) {
+        // ... criar Avaliacao
+        lista.add(avaliacao);
+    }
+    
+    return lista;
+}
+
+EXEMPLO: VER QUAIS BOVINOS FORAM AVALIADOS NUM AMBIENTE:
+---------------------------------------------------------
+int ambienteId = 1; // Estábulo Principal
+
+String sql = "SELECT DISTINCT b.id, a.nome " +
+             "FROM avaliacao av " +
+             "INNER JOIN bovino b ON av.bovino_id = b.id " +
+             "INNER JOIN animal a ON b.animal_id = a.id " +
+             "WHERE av.ambiente_id = ?";
+
+PreparedStatement ps = con.prepareStatement(sql);
+ps.setInt(1, ambienteId);
+ResultSet rs = ps.executeQuery();
+
+System.out.println("Bovinos avaliados no ambiente " + ambienteId + ":");
+while (rs.next()) {
+    System.out.println("- " + rs.getString("nome") + " (ID: " + rs.getInt("id") + ")");
+}
+
+
+========================================
+  QUERY COMPLETA: TODOS OS RELACIONAMENTOS
+========================================
+
+BUSCAR AVALIAÇÃO COMPLETA (3 JOINS):
+-------------------------------------
+String sql = 
+    "SELECT " +
+    "    av.id AS avaliacao_id, " +
+    "    av.valor_itu, " +
+    "    av.resultado, " +
+    "    av.data_avaliacao, " +
+    // Dados do BOVINO
+    "    b.id AS bovino_id, " +
+    "    b.raca, " +
+    "    b.linhagem, " +
+    "    b.producao_leite, " +
+    // Dados do ANIMAL (através do BOVINO)
+    "    a.nome AS nome_bovino, " +
+    "    a.peso, " +
+    "    a.idade, " +
+    // Dados do AMBIENTE
+    "    e.id AS ambiente_id, " +
+    "    e.temperatura, " +
+    "    e.umidade, " +
+    "    e.local " +
+    "FROM avaliacao av " +
+    "INNER JOIN bovino b ON av.bovino_id = b.id " +
+    "INNER JOIN animal a ON b.animal_id = a.id " +
+    "INNER JOIN ambiente e ON av.ambiente_id = e.id " +
+    "WHERE av.id = ?";
+
+PreparedStatement ps = con.prepareStatement(sql);
+ps.setInt(1, avaliacaoId);
+ResultSet rs = ps.executeQuery();
+
+if (rs.next()) {
+    System.out.println("=== AVALIAÇÃO COMPLETA ===");
+    System.out.println("Bovino: " + rs.getString("nome_bovino"));
+    System.out.println("Raça: " + rs.getString("raca"));
+    System.out.println("Peso: " + rs.getDouble("peso") + " kg");
+    System.out.println("Temperatura: " + rs.getDouble("temperatura") + "°C");
+    System.out.println("Umidade: " + rs.getDouble("umidade") + "%");
+    System.out.println("Local: " + rs.getString("local"));
+    System.out.println("ITU: " + rs.getDouble("valor_itu"));
+    System.out.println("Resultado: " + rs.getString("resultado"));
+}
+
+
+========================================
+  VALIDAÇÕES DE INTEGRIDADE NO JAVA
+========================================
+
+VALIDAR ANTES DE INSERIR AVALIAÇÃO:
+------------------------------------
+public boolean inserir(Avaliacao avaliacao) {
+    Connection con = Conexao.getConexao();
+    
+    // VALIDAÇÃO 1: Bovino existe?
+    String sqlCheckBovino = "SELECT id FROM bovino WHERE id = ?";
+    PreparedStatement psCheck = con.prepareStatement(sqlCheckBovino);
+    psCheck.setInt(1, avaliacao.getBovinoId());
+    ResultSet rsCheck = psCheck.executeQuery();
+    
+    if (!rsCheck.next()) {
+        throw new EntidadeNaoEncontradaException(
+            "Bovino com ID " + avaliacao.getBovinoId() + " não existe!"
+        );
+    }
+    
+    // VALIDAÇÃO 2: Ambiente existe?
+    String sqlCheckAmbiente = "SELECT id FROM ambiente WHERE id = ?";
+    psCheck = con.prepareStatement(sqlCheckAmbiente);
+    psCheck.setInt(1, avaliacao.getAmbienteId());
+    rsCheck = psCheck.executeQuery();
+    
+    if (!rsCheck.next()) {
+        throw new EntidadeNaoEncontradaException(
+            "Ambiente com ID " + avaliacao.getAmbienteId() + " não existe!"
+        );
+    }
+    
+    // Se chegou aqui, pode inserir
+    String sqlInsert = "INSERT INTO avaliacao (...) VALUES (...)";
+    // ... resto do código
+}
+
+
+========================================
+  ORDEM DE OPERAÇÕES (IMPORTANTE!)
+========================================
+
+INSERIR:
+--------
+1. USUARIO (independente)
+2. ANIMAL (PAI)
+3. BOVINO (depende de ANIMAL)
+4. AMBIENTE (independente)
+5. AVALIACAO (depende de BOVINO e AMBIENTE)
+
+APAGAR:
+-------
+1. AVALIACAO (nenhuma dependência)
+2. BOVINO (CASCADE apaga ANIMAL)
+3. AMBIENTE (independente)
+4. USUARIO (independente)
+
+
+========================================
+  EXEMPLO COMPLETO: CRIAR AVALIAÇÃO
+========================================
+
+// Na interface (JanelaPrincipal)
+private void btnAvaliarClicked() {
+    try {
+        // 1. Obter IDs dos campos
+        int bovinoId = Integer.parseInt(txtBovinoId.getText());
+        int ambienteId = Integer.parseInt(txtAmbienteId.getText());
+        
+        // 2. Buscar o ambiente para calcular ITU
+        AmbienteDAO ambienteDAO = new AmbienteDAO();
+        Ambiente ambiente = ambienteDAO.buscarPorId(ambienteId);
+        
+        if (ambiente == null) {
+            JOptionPane.showMessageDialog(this, "Ambiente não encontrado!");
+            return;
+        }
+        
+        // 3. Calcular ITU
+        double temp = ambiente.getTemperatura();
+        double umi = ambiente.getUmidade();
+        double itu = 0.8 * temp + (umi / 100.0) * (temp - 14.4) + 46.4;
+        
+        // 4. Classificar resultado
+        String resultado;
+        if (itu < 72) resultado = "CONFORTO";
+        else if (itu < 79) resultado = "ALERTA";
+        else resultado = "ESTRESSE";
+        
+        // 5. Criar avaliação
+        Avaliacao avaliacao = new Avaliacao();
+        avaliacao.setBovinoId(bovinoId);       // RELACIONAMENTO 2
+        avaliacao.setAmbienteId(ambienteId);   // RELACIONAMENTO 3
+        avaliacao.setValorITU(itu);
+        avaliacao.setResultado(resultado);
+        
+        // 6. Inserir na BD
+        AvaliacaoDAO avaliacaoDAO = new AvaliacaoDAO();
+        
+        if (avaliacaoDAO.inserir(avaliacao)) {
+            String msg = String.format(
+                "Avaliação concluída!%n%n" +
+                "ITU: %.2f%n" +
+                "Resultado: %s",
+                itu, resultado
+            );
+            JOptionPane.showMessageDialog(this, msg);
+            atualizarTabelaAvaliacoes();
+        }
+        
+    } catch (EntidadeNaoEncontradaException e) {
+        // Bovino ou Ambiente não existe
+        JOptionPane.showMessageDialog(this, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        
+    } catch (NumberFormatException e) {
+        // IDs inválidos
+        JOptionPane.showMessageDialog(this, "IDs devem ser números!", "Erro", JOptionPane.ERROR_MESSAGE);
+        
+    } catch (ConexaoBDException e) {
+        // Erro de BD
+        JOptionPane.showMessageDialog(this, "Erro de BD: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+    }
+}
+
+
+========================================
+  RESUMO DOS RELACIONAMENTOS NO CÓDIGO
+========================================
+
+1. ANIMAL → BOVINO (1:1):
+   - INSERT em 2 tabelas
+   - SELECT com JOIN
+   - DELETE com CASCADE
+
+2. BOVINO → AVALIACAO (1:N):
+   - Validar se bovino existe antes de inserir
+   - Buscar avaliações por bovino
+   - DELETE CASCADE automático
+
+3. AMBIENTE → AVALIACAO (1:N):
+   - Validar se ambiente existe antes de inserir
+   - Buscar avaliações por ambiente
+   - DELETE CASCADE automático
+
+
+========================================

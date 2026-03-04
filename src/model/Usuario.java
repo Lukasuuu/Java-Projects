@@ -1,138 +1,95 @@
 package model;
 
 /**
- * Classe Usuario - representa um utilizador do sistema.
- * Contém informações de login, nome completo e permissões de administrador.
- * Pode ser usada para autenticação e controle de acesso.
- * 
+ * Classe Usuario - Representa um utilizador do sistema.
+ * Versão simplificada para iniciantes:
+ * - username (login)
+ * - password (senha)
+ * - isAdmin (se é administrador)
+ *
  * @author Lucas
  */
 public class Usuario {
 
-    /** ID único do utilizador */
     private int id;
-
-    /** Nome de utilizador (login) */
-    private String nomeUtilizador;
-
-    /** Senha de acesso */
-    private String senha;
-
-    /** Nome completo do utilizador */
-    private String nomeCompleto;
-
-    /** Indica se o utilizador tem permissões de administrador */
-    private boolean admin;
+    private String username;
+    private String password;
+    private boolean isAdmin;
 
     /**
-     * Construtor vazio.
+     * Construtor vazio (útil para frameworks/DAO).
      */
-    public Usuario() {}
-
-    /**
-     * Construtor com parâmetros.
-     * 
-     * @param id ID do utilizador.
-     * @param nomeUtilizador Nome de login.
-     * @param senha Senha de acesso.
-     * @param nomeCompleto Nome completo do utilizador.
-     * @param admin true se for administrador, false caso contrário.
-     */
-    public Usuario(int id, String nomeUtilizador, String senha, String nomeCompleto, boolean admin) {
-        this.id = id;
-        this.nomeUtilizador = nomeUtilizador;
-        this.senha = senha;
-        this.nomeCompleto = nomeCompleto;
-        this.admin = admin;
+    public Usuario() {
     }
 
     /**
-     * Retorna o ID do utilizador.
-     * @return ID numérico.
+     * Construtor completo.
+     *
+     * @param id ID do utilizador na base de dados.
+     * @param username Nome de utilizador (login).
+     * @param password Senha do utilizador.
+     * @param isAdmin Indica se o utilizador é administrador.
+     */
+    public Usuario(int id, String username, String password, boolean isAdmin) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.isAdmin = isAdmin;
+    }
+
+    /**
+     * @return ID do utilizador.
      */
     public int getId() {
         return id;
     }
 
     /**
-     * Define o ID do utilizador.
-     * @param id Valor numérico.
+     * @param id ID do utilizador.
      */
     public void setId(int id) {
         this.id = id;
     }
 
     /**
-     * Retorna o nome de utilizador (login).
-     * @return Nome de utilizador.
+     * @return Username (login).
      */
-    public String getNomeUtilizador() {
-        return nomeUtilizador;
+    public String getUsername() {
+        return username;
     }
 
     /**
-     * Define o nome de utilizador (login).
-     * @param nomeUtilizador Nome de login.
+     * @param username Username (login).
      */
-    public void setNomeUtilizador(String nomeUtilizador) {
-        this.nomeUtilizador = nomeUtilizador;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     /**
-     * Retorna a senha do utilizador.
-     * @return Senha de acesso.
+     * @return Password (senha).
      */
-    public String getSenha() {
-        return senha;
+    public String getPassword() {
+        return password;
     }
 
     /**
-     * Define a senha do utilizador.
-     * @param senha Senha de acesso.
+     * @param password Password (senha).
      */
-    public void setSenha(String senha) {
-        this.senha = senha;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     /**
-     * Retorna o nome completo do utilizador.
-     * @return Nome completo.
-     */
-    public String getNomeCompleto() {
-        return nomeCompleto;
-    }
-
-    /**
-     * Define o nome completo do utilizador.
-     * @param nomeCompleto Nome completo.
-     */
-    public void setNomeCompleto(String nomeCompleto) {
-        this.nomeCompleto = nomeCompleto;
-    }
-
-    /**
-     * Verifica se o utilizador é administrador.
-     * @return true se for admin, false caso contrário.
+     * @return true se for admin; false caso contrário.
      */
     public boolean isAdmin() {
-        return admin;
+        return isAdmin;
     }
 
     /**
-     * Define se o utilizador é administrador.
-     * @param admin true para admin, false para utilizador comum.
+     * @param isAdmin Define se é admin.
      */
-    public void setAdmin(boolean admin) {
-        this.admin = admin;
-    }
-
-    @Override
-    public String toString() {
-        return "Usuario{" +
-                "id=" + id +
-                ", nomeUtilizador='" + nomeUtilizador + '\'' +
-                ", nomeCompleto='" + nomeCompleto + '\'' +
-                ", admin=" + admin +
-                '}';
+    public void setAdmin(boolean isAdmin) {
+        this.isAdmin = isAdmin;
     }
 }

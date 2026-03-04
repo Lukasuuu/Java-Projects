@@ -1,5 +1,6 @@
 package apresentation;
 
+import exception.ConexaoBDException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -116,21 +117,58 @@ public class Login extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    /**
+     * Faz o login no sistema.
+     * - Lê os campos da tela
+     * - Chama o UsuarioDB para validar no banco
+     * - Se der certo, abre a tela principal
+     * - Se der errado, mostra mensagem e não abre o sistema
+     */
     private void fazerLogin() {
-           try {
-            String user = txtUtilizador.getText().trim();
-            String pass = new String(txtPassword.getPassword());
 
-            UsuarioDB user_login = new UsuarioDB();
+        // 1) Ler os campos
+        String username = txtUtilizador.getText().trim();
+        String password = new String(txtPassword.getPassword());
 
-            Usuario u;
-            u = user_login.fazerLogin(user, pass);
+        // 2) Validar no banco
+        UsuarioDB usuarioDB = new UsuarioDB();
 
-            JOptionPane.showMessageDialog(rootPane, "Bem-Vindo, " + u.getNomeCompleto());
-            
-        } catch (exception.ProjetoException ex) {
-            // exception.Exception 
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "Erro", JOptionPane.WARNING_MESSAGE);
+        try {
+            Usuario u = usuarioDB.fazerLogin(username, password);
+
+            // 3) Se u == null, login inválido
+            if (u == null) {
+                JOptionPane.showMessageDialog(this,
+                        "Utilizador ou password incorretos.",
+                        "Login inválido",
+                        JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            // 4) Login OK
+            JOptionPane.showMessageDialog(this,
+                    "Bem-vindo, " + u.getUsername() + "!",
+                    "Sucesso",
+                    JOptionPane.INFORMATION_MESSAGE);
+
+            // 5) Abrir a janela principal e fechar o login
+            ConfortAnimal janela = new ConfortAnimal();
+            janela.setVisible(true);
+            dispose();
+
+        } catch (IllegalArgumentException e) {
+            // Campos vazios (lançado no UsuarioDB)
+            JOptionPane.showMessageDialog(this,
+                    e.getMessage(),
+                    "Atenção",
+                    JOptionPane.WARNING_MESSAGE);
+
+        } catch (ConexaoBDException e) {
+            // Erro de banco/conexão
+            JOptionPane.showMessageDialog(this,
+                    e.getMessage(),
+                    "Erro de Base de Dados",
+                    JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -138,17 +176,7 @@ public class Login extends javax.swing.JFrame {
      * Ação do botão Entrar (antes chamado btnGuardar)
      */
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-          try {
-            dispose();
-            fazerLogin();
-        } catch (Exception ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-        }
-       
-        ConfortAnimal janela;
-        janela = new ConfortAnimal();
-        
-        janela.setVisible(true);
+        fazerLogin();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     /**
