@@ -58,4 +58,25 @@ public class AmbienteService {
     public ArrayList<Ambiente> listarTodos() throws ConexaoBDException {
         return ambienteDB.listarTodos();
     }
+    
+    
+    /**
+ * Apaga um ambiente da base de dados.
+ * 
+ * @param ambienteId ID do ambiente a apagar
+ * @throws DadosInvalidosException se o ID for inválido
+ * @throws ConexaoBDException se houver erro de BD
+ */
+    public void apagar(int ambienteId)throws DadosInvalidosException {
+         // Validação: ID deve ser positivo
+    if (ambienteId <= 0) {
+        throw new DadosInvalidosException("ID do ambiente deve ser maior que zero!");
+    }
+    
+    // Chamar o DAO para apagar
+    AmbienteDB ambientedb = new AmbienteDB();
+    ambienteDB.apagar(ambienteId);
+    
+    System.out.println("[AmbienteService] Ambiente com ID " + ambienteId + " apagado.");
+    }
 }

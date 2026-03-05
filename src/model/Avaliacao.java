@@ -71,12 +71,10 @@ public class Avaliacao {
 
     /**
      * Construtor usado ao INSERIR uma nova avaliação.
-     * 
-     * ID do bovino a ser avaliado.
-     * ID do ambiente utilizado.
-     * Valor calculado do ITU.
-     * Classificação: "CONFORTO", "ALERTA" ou "ESTRESSE".
-     * 
+     *
+     * ID do bovino a ser avaliado. ID do ambiente utilizado. Valor calculado do
+     * ITU. Classificação: "CONFORTO", "ALERTA" ou "ESTRESSE".
+     *
      */
     public Avaliacao(int bovinoId, int ambienteId, double valorItu, String resultado) {
         this.bovinoId = bovinoId;
@@ -88,15 +86,10 @@ public class Avaliacao {
     /**
      * Construtor completo usado ao LISTAR avaliações da base de dados.
      *
-     * ID da avaliação.
-     * ID do bovino.
-     * ID do ambiente.
-     * Valor do ITU calculado.
-     * Classificação do resultado.
-     * Data e hora do registo.
-     * Nome do animal (obtido via JOIN).
-     * Local do ambiente (obtido via JOIN).
-     * 
+     * ID da avaliação. ID do bovino. ID do ambiente. Valor do ITU calculado.
+     * Classificação do resultado. Data e hora do registo. Nome do animal
+     * (obtido via JOIN). Local do ambiente (obtido via JOIN).
+     *
      */
     public Avaliacao(int id, int bovinoId, int ambienteId, double valorItu,
             String resultado, LocalDateTime dataAvaliacao,

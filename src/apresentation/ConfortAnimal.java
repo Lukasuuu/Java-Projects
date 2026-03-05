@@ -2,6 +2,7 @@ package apresentation;
 
 import exception.ConexaoBDException;
 import exception.DadosInvalidosException;
+import exception.ProjetoException;
 import java.awt.HeadlessException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -246,6 +247,11 @@ public class ConfortAnimal extends javax.swing.JFrame {
         });
 
         btnApagarAmbiente.setText("Apagar");
+        btnApagarAmbiente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnApagarAmbienteActionPerformed(evt);
+            }
+        });
 
         AmbienteTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -363,6 +369,11 @@ public class ConfortAnimal extends javax.swing.JFrame {
         txtProducao.setPreferredSize(new java.awt.Dimension(125, 25));
 
         btnApagarAnimal.setText("Apagar");
+        btnApagarAnimal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnApagarAnimalActionPerformed(evt);
+            }
+        });
 
         btnRegistarAnimal.setText("Registar");
         btnRegistarAnimal.addActionListener(new java.awt.event.ActionListener() {
@@ -676,7 +687,7 @@ private void mostrarCard(String nomeCard) {
     }
 
     /**
-     * Evento do botão "Registar" do Ambiente.
+     * Evento do botão Registar do Ambiente.
      *
      * Lê os valores digitados pelo utilizador Valida se não estão vazios
      * Converte temperatura e umidade para número Chama o Service para guardar
@@ -726,6 +737,164 @@ private void mostrarCard(String nomeCard) {
 
             JOptionPane.showMessageDialog(this,
                     "Erro ao registar ambiente: " + e.getMessage(),
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    /**
+     * Apaga o Animal/Bovino selecionado na tabela.
+     *
+     * Fluxo: 1. Verifica se há linha selecionada 
+     * 2. Obtém o ID da linha 
+     * 3.Confirma com o utilizador
+     * 4. Chama o service para apagar 
+     * 5. Atualiza a tabela
+     */
+    private void apagarRegistoAnimal() {
+        try {
+            // Verificar se há linha selecionada
+            int linhaSelecionada = AnimalTable.getSelectedRow();
+
+            if (linhaSelecionada == -1) {
+                JOptionPane.showMessageDialog(this,
+                        "Por favor, selecione um animal na tabela para apagar!",
+                        "Nenhum Animal Selecionado",
+                        JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            // Obter dados da linha selecionada
+            // Coluna 0 = ID do animal
+            int animalId = (int) AnimalTable.getValueAt(linhaSelecionada, 0);
+            String nomeAnimal = (String) AnimalTable.getValueAt(linhaSelecionada, 1);
+
+            // Confirmar com o utilizador
+            int confirmacao = JOptionPane.showConfirmDialog(this,
+                    """
+            Tem certeza que deseja apagar o animal:
+            
+            ID: """ + animalId + "\n"
+                    + "Nome: " + nomeAnimal + "\n\n"
+                    + "ATENÇÃO: Esta ação NÃO pode ser desfeita!\n"
+                    + "Todas as avaliações deste animal também serão apagadas!",
+                    "Confirmar Exclusão",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.WARNING_MESSAGE);
+
+            if (confirmacao != JOptionPane.YES_OPTION) {
+                return; // Utilizador cancelou
+            }
+
+            // PASSO 4: Apagar através do service
+            animalService.apagar(animalId);
+
+            // PASSO 5: Mostrar sucesso e atualizar tabela
+            JOptionPane.showMessageDialog(this,
+                    "Animal \"" + nomeAnimal + "\" apagado com sucesso!",
+                    "Sucesso",
+                    JOptionPane.INFORMATION_MESSAGE);
+
+            // Atualizar a tabela
+            listarAnimais();
+
+            System.out.println("Animal apagado: ID=" + animalId + ", Nome=" + nomeAnimal);
+
+        } catch (DadosInvalidosException e) {
+            JOptionPane.showMessageDialog(this,
+                    "Erro ao apagar animal:\n" + e.getMessage(),
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE);
+
+        } catch (ConexaoBDException e) {
+            JOptionPane.showMessageDialog(this,
+                    "Erro de conexão ao apagar animal:\n" + e.getMessage(),
+                    "Erro de BD",
+                    JOptionPane.ERROR_MESSAGE);
+
+        } catch (ProjetoException e) {
+            JOptionPane.showMessageDialog(this,
+                    "Erro inesperado ao apagar animal:\n" + e.getMessage(),
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    /**
+     * Apaga o Ambiente selecionado na tabela.
+     *
+     * Fluxo: 1. Verifica se há linha selecionada 2. Obtém o ID da linha 3.
+     * Confirma com o utilizador 4. Chama o service para apagar 5. Atualiza a
+     * tabela
+     */
+    private void apagarRegistoAmbiente() {
+        try {
+            // PASSO 1: Verificar se há linha selecionada
+            int linhaSelecionada = AmbienteTable.getSelectedRow();
+
+            if (linhaSelecionada == -1) {
+                JOptionPane.showMessageDialog(this,
+                        "Por favor, selecione um ambiente na tabela para apagar!",
+                        "Nenhum Ambiente Selecionado",
+                        JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            // PASSO 2: Obter dados da linha selecionada
+            // Coluna 0 = ID, Coluna 3 = Local
+            int ambienteId = (int) AmbienteTable.getValueAt(linhaSelecionada, 0);
+            String local = (String) AmbienteTable.getValueAt(linhaSelecionada, 3);
+            double temperatura = (double) AmbienteTable.getValueAt(linhaSelecionada, 1);
+            double umidade = (double) AmbienteTable.getValueAt(linhaSelecionada, 2);
+
+            // PASSO 3: Confirmar com o utilizador
+            int confirmacao = JOptionPane.showConfirmDialog(this,
+                    """
+            Tem certeza que deseja apagar o ambiente:
+            
+            ID: """ + ambienteId + "\n"
+                    + "Local: " + local + "\n"
+                    + "Temperatura: " + temperatura + "°C\n"
+                    + "Umidade: " + umidade + "%\n\n"
+                    + "ATENÇÃO: Esta ação NÃO pode ser desfeita!\n"
+                    + "Todas as avaliações que usam este ambiente também serão apagadas!",
+                    "Confirmar Exclusão",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.WARNING_MESSAGE);
+
+            if (confirmacao != JOptionPane.YES_OPTION) {
+                return; // Utilizador cancelou
+            }
+
+            // PASSO 4: Apagar através do service
+            ambienteService.apagar(ambienteId);
+
+            // PASSO 5: Mostrar sucesso e atualizar tabela
+            JOptionPane.showMessageDialog(this,
+                    "Ambiente \"" + local + "\" apagado com sucesso!",
+                    "Sucesso",
+                    JOptionPane.INFORMATION_MESSAGE);
+
+            // Atualizar a tabela
+            listarAmbientes();
+
+            System.out.println("Ambiente apagado: ID=" + ambienteId + ", Local=" + local);
+
+        } catch (DadosInvalidosException e) {
+            JOptionPane.showMessageDialog(this,
+                    "Erro ao apagar ambiente:\n" + e.getMessage(),
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE);
+
+        } catch (ConexaoBDException e) {
+            JOptionPane.showMessageDialog(this,
+                    "Erro de conexão ao apagar ambiente:\n" + e.getMessage(),
+                    "Erro de BD",
+                    JOptionPane.ERROR_MESSAGE);
+
+        } catch (ProjetoException e) {
+            JOptionPane.showMessageDialog(this,
+                    "Erro inesperado ao apagar ambiente:\n" + e.getMessage(),
                     "Erro",
                     JOptionPane.ERROR_MESSAGE);
         }
@@ -968,6 +1137,14 @@ private void mostrarCard(String nomeCard) {
     private void btnListarAvaliacoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarAvaliacoesActionPerformed
         listarAvaliacoes();
     }//GEN-LAST:event_btnListarAvaliacoesActionPerformed
+
+    private void btnApagarAnimalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApagarAnimalActionPerformed
+        apagarRegistoAnimal();
+    }//GEN-LAST:event_btnApagarAnimalActionPerformed
+
+    private void btnApagarAmbienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApagarAmbienteActionPerformed
+        apagarRegistoAmbiente();
+    }//GEN-LAST:event_btnApagarAmbienteActionPerformed
 
     /**
      * @param args the command line arguments

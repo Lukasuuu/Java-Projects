@@ -3,7 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package service;
+
 import exception.ConexaoBDException;
+import exception.DadosInvalidosException;
 import java.util.ArrayList;
 import model.Bovino;
 import persistence.AnimalDB;
@@ -79,5 +81,26 @@ public class AnimalService {
      */
     public ArrayList<Bovino> listarBovinos() throws ConexaoBDException {
         return animalDB.listarBovinos();
+    }
+
+    /**
+     * Apaga um animal da base de dados.
+     *
+     * @param animalId ID do animal a apagar
+     * @throws DadosInvalidosException se o ID for inválido
+     * @throws ConexaoBDException se houver erro de BD
+     */
+    public void apagar(int animalId) throws DadosInvalidosException {
+
+        // Validação: ID deve ser positivo
+        if (animalId <= 0) {
+            throw new DadosInvalidosException("ID do animal deve ser maior que zero!");
+        }
+
+        // Chamar o DAO para apagar
+        AnimalDB animaldb = new AnimalDB();
+        animalDB.apagar(animalId);
+
+        System.out.println("Animal com ID " + animalId + " apagado.");
     }
 }

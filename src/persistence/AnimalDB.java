@@ -11,16 +11,14 @@ import model.Animal;
 import model.Bovino;
 
 /**
- * Classe AnimalDB - Acesso à base de dados para registo e consulta de animais do tipo bovino.
+ * Classe AnimalDB - Acesso à base de dados para registo e consulta de animais
+ * do tipo bovino.
  *
- * <p><b>Schema utilizado (novo):</b></p>
- * <ul>
- *   <li><b>animal</b> (id, nome, peso, idade)</li>
- *   <li><b>bovino</b> (id, animal_id, raca, linhagem, producao_leite)</li>
- *   <li><b>vw_bovinos_completos</b>: view que junta animal + bovino (ideal para JTable)</li>
- * </ul>
+ * Schema utilizado:
  *
- * <p><b>Objetivo:</b> manter o código simples e fácil de apresentar para um aluno iniciante.</p>
+ * Animal (id, nome, peso, idade)
+ * Bovino (id, animal_id, raca, linhagem, producao_leite)
+ * vw_bovinos_completos: junta animal + bovino
  *
  * @author Lucas
  */
@@ -29,12 +27,10 @@ public class AnimalDB {
     /**
      * Regista um bovino completo (Animal + Bovino) usando transação.
      *
-     * <p>Passos:</p>
-     * <ol>
-     *   <li>Insere na tabela <b>animal</b></li>
-     *   <li>Obtém o ID gerado</li>
-     *   <li>Insere na tabela <b>bovino</b> usando esse ID como animal_id</li>
-     * </ol>
+     * Passos:
+     * Insere na tabela Animal
+     * Obtém o ID gerado
+     * Insere na tabela Bovino usando esse ID como animal_id
      *
      * @param nome Nome do animal.
      * @param peso Peso do animal (kg). Deve ser > 0.
@@ -45,7 +41,7 @@ public class AnimalDB {
      * @throws ConexaoBDException Se ocorrer erro de SQL ou ligação.
      */
     public void registarBovino(String nome, double peso, int idade,
-                               String raca, String linhagem, double producaoLeite) throws ConexaoBDException {
+            String raca, String linhagem, double producaoLeite) throws ConexaoBDException {
 
         // SQL de inserção na tabela animal (apenas dados comuns)
         final String sqlAnimal = "INSERT INTO animal (nome, peso, idade) VALUES (?, ?, ?)";
@@ -53,7 +49,7 @@ public class AnimalDB {
         // SQL de inserção na tabela bovino (dados específicos + FK animal_id)
         final String sqlBovino = "INSERT INTO bovino (animal_id, raca, linhagem, producao_leite) VALUES (?, ?, ?, ?)";
 
-        try (Connection con = Conexao.getConexao()) {
+        try ( Connection con = Conexao.getConexao()) {
 
             // Inicia transação: garante que os 2 inserts acontecem juntos
             con.setAutoCommit(false);
@@ -61,7 +57,7 @@ public class AnimalDB {
             int animalIdGerado;
 
             // 1) Inserir animal e obter o ID gerado
-            try (PreparedStatement psAnimal = con.prepareStatement(sqlAnimal, Statement.RETURN_GENERATED_KEYS)) {
+            try ( PreparedStatement psAnimal = con.prepareStatement(sqlAnimal, Statement.RETURN_GENERATED_KEYS)) {
 
                 psAnimal.setString(1, nome);
                 psAnimal.setDouble(2, peso);
@@ -70,7 +66,7 @@ public class AnimalDB {
                 psAnimal.executeUpdate();
 
                 // Pega o ID gerado automaticamente pelo MySQL
-                try (ResultSet keys = psAnimal.getGeneratedKeys()) {
+                try ( ResultSet keys = psAnimal.getGeneratedKeys()) {
                     if (keys.next()) {
                         animalIdGerado = keys.getInt(1);
                     } else {
@@ -81,7 +77,7 @@ public class AnimalDB {
             }
 
             // 2) Inserir bovino com o animal_id obtido
-            try (PreparedStatement psBovino = con.prepareStatement(sqlBovino)) {
+            try ( PreparedStatement psBovino = con.prepareStatement(sqlBovino)) {
 
                 psBovino.setInt(1, animalIdGerado);
                 psBovino.setString(2, raca);
@@ -103,8 +99,8 @@ public class AnimalDB {
     /**
      * Insere um Animal na base de dados e devolve o ID gerado.
      *
-     * <p>Este método é útil se você quiser inserir o Animal primeiro, e depois,
-     * em outro ponto, inserir o Bovino.</p>
+     * Este método é útil se você quiser inserir o Animal primeiro, e depois, em
+     * outro ponto, inserir o Bovino.
      *
      * @param animal Objeto Animal com (nome, peso, idade).
      * @return ID gerado na tabela animal.
@@ -114,8 +110,8 @@ public class AnimalDB {
 
         final String sql = "INSERT INTO animal (nome, peso, idade) VALUES (?, ?, ?)";
 
-        try (Connection con = Conexao.getConexao();
-             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+        try ( Connection con = Conexao.getConexao();  
+              PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             ps.setString(1, animal.getNome());
             ps.setDouble(2, animal.getPeso());
@@ -123,7 +119,7 @@ public class AnimalDB {
 
             ps.executeUpdate();
 
-            try (ResultSet keys = ps.getGeneratedKeys()) {
+            try ( ResultSet keys = ps.getGeneratedKeys()) {
                 if (keys.next()) {
                     return keys.getInt(1);
                 }
@@ -138,9 +134,7 @@ public class AnimalDB {
 
     /**
      * Insere um Bovino na tabela bovino.
-     *
-     * <p><b>ATENÇÃO:</b> o animal_id (FK) precisa existir na tabela animal.</p>
-     *
+     * 
      * @param bovino Objeto Bovino contendo animalId, raça, linhagem e produção.
      * @throws ConexaoBDException Se ocorrer erro de SQL ou ligação.
      */
@@ -148,8 +142,8 @@ public class AnimalDB {
 
         final String sql = "INSERT INTO bovino (animal_id, raca, linhagem, producao_leite) VALUES (?, ?, ?, ?)";
 
-        try (Connection con = Conexao.getConexao();
-             PreparedStatement ps = con.prepareStatement(sql)) {
+        try ( Connection con = Conexao.getConexao();  
+              PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setInt(1, bovino.getAnimalId());
             ps.setString(2, bovino.getRaca());
@@ -166,23 +160,21 @@ public class AnimalDB {
     /**
      * Lista bovinos completos usando a view vw_bovinos_completos.
      *
-     * <p>É o método mais prático para preencher a JTable,
-     * porque a view já traz dados do Animal + dados do Bovino.</p>
+     * É o método mais prático para preencher a JTable, porque a view já traz
+     * dados do Animal + dados do Bovino.
      *
      * @return Lista de BovinoCompleto (pronto para interface).
      * @throws ConexaoBDException Se ocorrer erro de SQL ou ligação.
      */
     public ArrayList<Bovino> listarBovinos() throws ConexaoBDException {
 
-        final String sql =
-                "SELECT bovino_id, animal_id, nome, peso, idade, raca, linhagem, producao_leite " +
-                "FROM vw_bovinos_completos ORDER BY bovino_id";
+        final String sql
+                = "SELECT bovino_id, animal_id, nome, peso, idade, raca, linhagem, producao_leite "
+                + "FROM vw_bovinos_completos ORDER BY bovino_id";
 
         ArrayList<Bovino> lista = new ArrayList<>();
 
-        try (Connection con = Conexao.getConexao();
-             PreparedStatement ps = con.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
+        try ( Connection con = Conexao.getConexao();  PreparedStatement ps = con.prepareStatement(sql);  ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
 
@@ -205,5 +197,59 @@ public class AnimalDB {
         }
 
         return lista;
+    }
+
+    /**
+     * Apaga um animal (bovino) da base de dados.
+     *
+     * bovino → apaga animal automaticamente (CASCADE)l
+     *
+     * @param animalId ID do animal a apagar
+     * @throws ConexaoBDException se houver erro de BD
+     */
+    public void apagar(int animalId) {
+        // SQL para apagar da tabela bovino
+        String sql = "DELETE FROM bovino WHERE animal_id = ?";
+
+        Connection conexao = null;
+        PreparedStatement stmt = null;
+
+        try {
+            // Obter conexão
+            conexao = Conexao.getConexao();
+
+            if (conexao == null) {
+                throw new ConexaoBDException("Não foi possível conectar à base de dados!");
+            }
+
+            // Preparar statement
+            stmt = conexao.prepareStatement(sql);
+            stmt.setInt(1, animalId);
+
+            // Executar
+            int linhasAfetadas = stmt.executeUpdate();
+
+            if (linhasAfetadas == 0) {
+                throw new ConexaoBDException("Animal com ID " + animalId + " não foi encontrado!");
+            }
+
+            System.out.println("[AnimalDB] Animal apagado. Linhas afetadas: " + linhasAfetadas);
+
+        } catch (SQLException e) {
+            throw new ConexaoBDException("Erro ao apagar animal: " + e.getMessage(), e);
+
+        } finally {
+            // Fechar recursos
+            try {
+                if (stmt != null) {
+                    stmt.close();
+                }
+                if (conexao != null) {
+                    conexao.close();
+                }
+            } catch (SQLException e) {
+                System.err.println("Erro ao fechar recursos: " + e.getMessage());
+            }
+        }
     }
 }
