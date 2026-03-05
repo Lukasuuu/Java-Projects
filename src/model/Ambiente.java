@@ -1,9 +1,12 @@
 package model;
 
+import java.time.LocalDateTime;
+
 /**
- * Classe Ambiente - representa as condições climáticas de um local em uma data específica.
- * Contém informações como temperatura, umidade, local e data de registo.
- * 
+ * Classe Ambiente - representa as condições climáticas de um local em uma data
+ * específica. Contém informações como temperatura, umidade, local e data de
+ * registo.
+ *
  * @author Lucas
  */
 public class Ambiente {
@@ -12,32 +15,53 @@ public class Ambiente {
     private double temperatura;
     private double umidade;
     private String local;
-    private String dataRegisto;
+    private LocalDateTime dataRegisto;
 
     /**
      * Construtor vazio.
      */
-    public Ambiente() {}
+    public Ambiente() {
+    }
 
     /**
-     * Construtor com parâmetros.
-     * 
-     * @param id Identificador do ambiente.
-     * @param temperatura Temperatura em graus Celsius.
-     * @param umidade Umidade relativa em porcentagem.
-     * @param local Local de medição.
-     * @param dataRegisto Data do registo (formato: dd/MM/yyyy).
+     * Construtor para inserir
+     *
+     * @param temperatura temperatura (°C)
+     * @param umidade umidade (%)
+     * @param local local do registo
      */
-    public Ambiente(int id, double temperatura, double umidade, String local, String dataRegisto) {
+        public Ambiente(double temperatura, double umidade, String local) {
+        this.temperatura = temperatura;
+        this.umidade = umidade;
+        this.local = local;
+    }
+
+    /**
+     * Construtor completo (listagem).
+     *
+     * @param id id do registo
+     * @param temperatura temperatura (°C)
+     * @param umidade umidade (%)
+     * @param local local do registo
+     * @param dataRegisto data/hora do registo
+     */
+    public Ambiente(int id, double temperatura, double umidade, String local, LocalDateTime dataRegisto) {
         this.id = id;
-        this.setTemperatura(temperatura);
-        this.setUmidade(umidade);
+        this.temperatura = temperatura;
+        this.umidade = umidade;
         this.local = local;
         this.dataRegisto = dataRegisto;
     }
 
+
+
+    public Ambiente(int id, double temp, double umid, String local) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
     /**
      * Retorna o ID do ambiente.
+     *
      * @return ID numérico.
      */
     public int getId() {
@@ -46,6 +70,7 @@ public class Ambiente {
 
     /**
      * Define o ID do ambiente.
+     *
      * @param id Identificador numérico.
      */
     public void setId(int id) {
@@ -54,6 +79,7 @@ public class Ambiente {
 
     /**
      * Retorna a temperatura registrada.
+     *
      * @return Temperatura em graus Celsius.
      */
     public double getTemperatura() {
@@ -62,6 +88,7 @@ public class Ambiente {
 
     /**
      * Define a temperatura do ambiente.
+     *
      * @param temperatura Valor da temperatura.
      */
     public void setTemperatura(double temperatura) {
@@ -73,6 +100,7 @@ public class Ambiente {
 
     /**
      * Retorna a umidade registrada.
+     *
      * @return Umidade relativa em porcentagem.
      */
     public double getUmidade() {
@@ -81,6 +109,7 @@ public class Ambiente {
 
     /**
      * Define a umidade do ambiente.
+     *
      * @param umidade Valor da umidade.
      */
     public void setUmidade(double umidade) {
@@ -92,6 +121,7 @@ public class Ambiente {
 
     /**
      * Retorna o local do registo.
+     *
      * @return Nome do local.
      */
     public String getLocal() {
@@ -100,6 +130,7 @@ public class Ambiente {
 
     /**
      * Define o local do registo.
+     *
      * @param local Nome do local.
      */
     public void setLocal(String local) {
@@ -108,23 +139,24 @@ public class Ambiente {
 
     /**
      * Retorna a data do registo.
+     *
      * @return Data no formato texto.
      */
-    public String getDataRegisto() {
+    public LocalDateTime getDataRegisto() {
         return dataRegisto;
     }
 
     /**
      * Define a data do registo.
+     *
      * @param dataRegisto Data no formato texto.
      */
-    public void setDataRegisto(String dataRegisto) {
+    public void setDataRegisto(LocalDateTime dataRegisto) {
         this.dataRegisto = dataRegisto;
     }
 
-    @Override
-    public String toString() {
-        return "Ambiente em " + local + " (" + dataRegisto + ") - " +
-               "Temperatura: " + temperatura + "°C, Umidade: " + umidade + "%";
-    }
+@Override
+public String toString() {
+    return local + " (" + temperatura + "°C / " + umidade + "%)";
+}
 }

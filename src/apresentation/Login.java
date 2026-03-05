@@ -6,35 +6,39 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import model.Usuario;
 import persistence.UsuarioDB;
+import service.UsuarioService;
 
 /**
- * Classe Login - Interface gráfica para autenticação de utilizadores.
- * Permite o acesso ao sistema ConfortAnimal mediante nome de utilizador e senha válidos.
+ * Classe Login - Interface gráfica para autenticação de utilizadores. Permite o
+ * acesso ao sistema ConfortAnimal mediante nome de utilizador e senha válidos.
  * Após login bem-sucedido, redireciona para a tela principal.
- * 
+ *
  * Esta classe utiliza Swing (JFrame) e foi parcialmente gerada por IDE.
- * 
+ *
  * @author Lucas
  */
 public class Login extends javax.swing.JFrame {
+
+    private final UsuarioService usuarioService = new UsuarioService();
 
     /**
      * Construtor padrão da janela de login.
      */
     public Login() {
         initComponents();
+        // Permite pressionar Enter para fazer login
+        getRootPane().setDefaultButton(btnGuardar);
         setLocationRelativeTo(null);
         setTitle("ConfortAnimal - Login");
+        
     }
 
     /**
      * Construtor auxiliar (caso seja necessário receber parâmetros).
+     *
      * @param aThis Referência à janela principal.
      * @param b Flag de controle (não utilizado).
      */
-    Login(ConfortAnimal aThis, boolean b) {
-        this();
-    }
 
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -118,11 +122,9 @@ public class Login extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     /**
-     * Faz o login no sistema.
-     * - Lê os campos da tela
-     * - Chama o UsuarioDB para validar no banco
-     * - Se der certo, abre a tela principal
-     * - Se der errado, mostra mensagem e não abre o sistema
+     * Faz o login no sistema. - Lê os campos da tela - Chama o UsuarioDB para
+     * validar no banco - Se der certo, abre a tela principal - Se der errado,
+     * mostra mensagem e não abre o sistema
      */
     private void fazerLogin() {
 
@@ -131,10 +133,8 @@ public class Login extends javax.swing.JFrame {
         String password = new String(txtPassword.getPassword());
 
         // 2) Validar no banco
-        UsuarioDB usuarioDB = new UsuarioDB();
-
         try {
-            Usuario u = usuarioDB.fazerLogin(username, password);
+            Usuario u = usuarioService.autenticar(username, password);
 
             // 3) Se u == null, login inválido
             if (u == null) {
@@ -154,6 +154,7 @@ public class Login extends javax.swing.JFrame {
             // 5) Abrir a janela principal e fechar o login
             ConfortAnimal janela = new ConfortAnimal();
             janela.setVisible(true);
+
             dispose();
 
         } catch (IllegalArgumentException e) {
@@ -163,7 +164,7 @@ public class Login extends javax.swing.JFrame {
                     "Atenção",
                     JOptionPane.WARNING_MESSAGE);
 
-        } catch (ConexaoBDException e) {
+        } catch (exception.ConexaoBDException e) {
             // Erro de banco/conexão
             JOptionPane.showMessageDialog(this,
                     e.getMessage(),
