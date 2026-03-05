@@ -190,7 +190,7 @@ Onde:
 
 - Java JDK 17 ou superior instalado
 - MySQL 8.0 instalado e a correr
-- NetBeans IDE (recomendado) ou outro IDE Java
+- NetBeans IDE 15 (recomendado) ou outro IDE Java
 
 ### Passo a Passo
 
