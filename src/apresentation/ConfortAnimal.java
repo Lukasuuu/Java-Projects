@@ -3,11 +3,9 @@ package apresentation;
 import exception.ConexaoBDException;
 import exception.DadosInvalidosException;
 import exception.ProjetoException;
-import java.awt.HeadlessException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import model.Animal;
 import model.Bovino;
 import model.Ambiente;
 import model.Avaliacao;
@@ -35,14 +33,14 @@ public class ConfortAnimal extends javax.swing.JFrame {
      * Creates new form ConfortAnimal
      */
     public ConfortAnimal() {
+        
         initComponents();
         inicializarHome();
         setLocationRelativeTo(null);
         mostrarCard("HOME");
     }
     /**
-     * Service do Ambiente e o Animal. A tela chama o Service, e o Service chama
-     * o DB.
+     * 
      */
     private final AvaliacaoService avaliacaoService = new AvaliacaoService();
     private final AmbienteService ambienteService = new AmbienteService();
@@ -899,10 +897,12 @@ private void mostrarCard(String nomeCard) {
                     JOptionPane.ERROR_MESSAGE);
         }
     }
-
+    
     /**
+     *   
      * Lista os animais na JTable usando a view vw_bovinos_completos.
-     */
+     *
+     */  
     private void listarAnimais() {
         try {
 
@@ -1167,7 +1167,9 @@ private void mostrarCard(String nomeCard) {
 
         });
     }
-
+/**
+ * 
+ */
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane Ambiente;
     private javax.swing.JTable AmbienteTable;

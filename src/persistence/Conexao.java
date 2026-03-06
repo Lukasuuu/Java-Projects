@@ -43,8 +43,8 @@ public class Conexao {
     }
 
     /**
-     * Método utilitário para testar a conexão com o banco de dados.
-     * Exibe mensagens no console com o resultado do teste.
+     * Método utilitário para testar a conexão com o banco de dados.Exibe mensagens no console com o resultado do teste.
+     * @throws SQLException  se ocorrer erro ao tentar estabelecer a conexão com a base de dados
      */
     public static void testarConexao() throws SQLException {
         System.out.println("========================================");
@@ -71,10 +71,11 @@ public class Conexao {
         System.out.println("========================================");
     }
 
-    /**
+   /**
      * Método main para executar o teste de conexão diretamente.
      * 
      * @param args Argumentos da linha de comando.
+     * @throws SQLException se ocorrer erro ao tentar estabelecer a conexão com a base de dados
      */
     public static void main(String[] args) throws SQLException {
         testarConexao();

@@ -53,16 +53,10 @@ public class Ambiente {
         this.dataRegisto = dataRegisto;
     }
 
-
-
-    public Ambiente(int id, double temp, double umid, String local) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
     /**
      * Retorna o ID do ambiente.
      *
-     * @return ID numérico.
+     * @return id numérico.
      */
     public int getId() {
         return id;

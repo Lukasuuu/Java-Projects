@@ -25,9 +25,9 @@ import persistence.AvaliacaoDB;
  *
  * Classificação:
  *
- * ITU menor 72 → CONFORTO (animal sem stress) 72 ≤ ITU & 79 → ALERTA (atenção
- * necessária) ITU ≥ 79 → ESTRESSE (risco ao animal)
- *
+ * ITU menor que 72 CONFORTO (animal sem stress);
+ * 72 menor ou igual ITU e menor que 79 ALERTA (atencao);
+ * ITU maior ou igual a 79 PERIGO.
  *
  * @author Lucas
  */

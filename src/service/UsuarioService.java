@@ -31,10 +31,9 @@ public class UsuarioService {
      * Regras simples:
      * Não aceitar campos vazios
      * Se as credenciais estiverem erradas, retorna null
-     * @param nomeUtilizador Nome de utilizador (login).
-     * @param senha Senha.
+     * @param username Nome de utilizador (login).
+     * @param password Senha.
      * @return Usuario autenticado ou null se inválido.
-     * @throws IllegalArgumentException se os campos estiverem vazios.
      * @throws ConexaoBDException se houver erro na base de dados.
      */
     public Usuario autenticar(String username, String password) throws ConexaoBDException {
