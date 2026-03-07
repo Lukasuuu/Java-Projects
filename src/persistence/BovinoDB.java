@@ -1,12 +1,12 @@
 package persistence;
 
-import exception.ConexaoBDException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import model.Bovino;
+import exception.ConexaoBDException;
 
 /**
  * Classe BovinoDB - responsável por todas as operações SQL

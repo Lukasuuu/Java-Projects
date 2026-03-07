@@ -15,16 +15,17 @@ import service.AvaliacaoService;
 import service.BovinoService;
 
 /**
- * Classe ConfortAnimal - Janela principal do sistema.
- *
- * Estrutura pensada para iniciantes: - Menu superior: Home / Dados / Logout -
- * Abas (JTabbedPane): Animal / Ambiente / Avaliações - Cada aba tem uma tabela
- * (JTable) para listar dados.
- *
- * Mais tarde, você pode adicionar: - Formulários de cadastro (Animal, Ambiente)
- * - Botões para inserir, listar, atualizar e apagar - Fluxo de avaliação
- * (Animal + Ambiente -> Avaliação)
- *
+* ConfortAnimal – Sistema de Gestão de Conforto Térmico Animal
+* 
+* Aplicação Java desktop para monitorização bioclimática de bovinos leiteiros e de corte
+* Implementação de herança OOP (Animal como classe base, Bovino como especialização)
+* Registro de variáveis climáticas (temperatura e umidade relativa) por localização
+* Geração automática de avaliações com cálculo do ITU segundo fórmula bioclimática
+* Sistema visual de alertas baseado em thresholds: menor que 72 (Conforto), entre 72 e 79 (Alerta), maior e igual que 79 (Estresse)
+* Arquitetura em três camadas com separação de responsabilidades (MVC adaptado)
+* Gestão completa de dados (Create, Read, Update, Delete) com validação de integridade
+* Tratamento robusto de exceções com classes personalizadas (DadosInvalidosException, ConexaoBDException)
+* 
  * @author Lucas
  */
 public class ConfortAnimal extends javax.swing.JFrame {
@@ -39,12 +40,13 @@ public class ConfortAnimal extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         mostrarCard("HOME");
     }
-    /**
-     * 
-     */
+    /** Serviço responsável pelas operações de negócio relacionadas aos bovinos.   */
     private final AvaliacaoService avaliacaoService = new AvaliacaoService();
+    /** Serviço responsável pelas operações de negócio relacionadas aos ambientes. */
     private final AmbienteService ambienteService = new AmbienteService();
+    /** Serviço responsável pelas operações de negócio relacionadas aos animais. */
     private final AnimalService animalService = new AnimalService();
+    /** Serviço responsável pelas operações de negócio relacionadas aos bovinos. */
     private final BovinoService bovinoService = new BovinoService();
 
     /**
@@ -196,7 +198,7 @@ public class ConfortAnimal extends javax.swing.JFrame {
             .addGroup(cardAvaliacoesLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(Avaliacoes, javax.swing.GroupLayout.PREFERRED_SIZE, 1235, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(81, Short.MAX_VALUE))
+                .addContainerGap(89, Short.MAX_VALUE))
             .addGroup(cardAvaliacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(cardAvaliacoesLayout.createSequentialGroup()
                     .addContainerGap()
@@ -206,7 +208,7 @@ public class ConfortAnimal extends javax.swing.JFrame {
         cardAvaliacoesLayout.setVerticalGroup(
             cardAvaliacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, cardAvaliacoesLayout.createSequentialGroup()
-                .addContainerGap(98, Short.MAX_VALUE)
+                .addContainerGap(106, Short.MAX_VALUE)
                 .addComponent(Avaliacoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(41, 41, 41))
             .addGroup(cardAvaliacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -288,11 +290,11 @@ public class ConfortAnimal extends javax.swing.JFrame {
                                 .addComponent(txtUmidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(704, 704, 704))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelFormAmbienteLayout.createSequentialGroup()
-                                .addComponent(btnApagarAmbiente)
-                                .addGap(18, 18, 18)
+                                .addComponent(btnApagarAmbiente, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnRegistarAmbiente)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnListarAmbiente))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnListarAmbiente, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addComponent(Ambiente))
                 .addContainerGap())
         );
@@ -307,10 +309,10 @@ public class ConfortAnimal extends javax.swing.JFrame {
                     .addComponent(lbTemperatura)
                     .addComponent(txtUmidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbUmidade))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(19, 19, 19)
                 .addGroup(panelFormAmbienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnApagarAmbiente)
                     .addComponent(btnRegistarAmbiente)
+                    .addComponent(btnApagarAmbiente)
                     .addComponent(btnListarAmbiente))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(Ambiente, javax.swing.GroupLayout.PREFERRED_SIZE, 412, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -413,13 +415,6 @@ public class ConfortAnimal extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelFormAnimalLayout.createSequentialGroup()
                 .addGroup(panelFormAnimalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(panelFormAnimalLayout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnApagarAnimal)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnRegistarAnimal)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnListarAnimal))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelFormAnimalLayout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addGroup(panelFormAnimalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(Animal, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -446,7 +441,14 @@ public class ConfortAnimal extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(lbProducaoDeLeite, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(txtProducao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(txtProducao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(panelFormAnimalLayout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnApagarAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnRegistarAnimal)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnListarAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         panelFormAnimalLayout.setVerticalGroup(
@@ -467,14 +469,13 @@ public class ConfortAnimal extends javax.swing.JFrame {
                     .addComponent(lbProducaoDeLeite)
                     .addComponent(txtProducao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(panelFormAnimalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnApagarAnimal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(panelFormAnimalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnListarAnimal)
-                        .addComponent(btnRegistarAnimal)))
-                .addGap(18, 18, 18)
+                .addGroup(panelFormAnimalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnRegistarAnimal)
+                    .addComponent(btnApagarAnimal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnListarAnimal))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                 .addComponent(Animal, javax.swing.GroupLayout.PREFERRED_SIZE, 412, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(45, Short.MAX_VALUE))
+                .addGap(45, 45, 45))
         );
 
         lbNome.getAccessibleContext().setAccessibleDescription("");
@@ -491,7 +492,7 @@ public class ConfortAnimal extends javax.swing.JFrame {
             cardAnimalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(cardAnimalLayout.createSequentialGroup()
                 .addComponent(panelFormAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 19, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         jPanel1.add(cardAnimal, "ANIMAL");
@@ -927,8 +928,8 @@ private void mostrarCard(String nomeCard) {
                     b.getProducaoLeite()
                 });
             }
-
-        } catch (exception.DadosInvalidosException e) {
+          //Lança no DadosInvalidos uma mensssa
+        } catch (ConexaoBDException e) {
 
             JOptionPane.showMessageDialog(this,
                     "Erro ao listar animais: " + e.getMessage(),
@@ -962,7 +963,7 @@ private void mostrarCard(String nomeCard) {
                 });
 
             }
-
+            // lança a excessao para o ConexaoDB em forma de menssagem para se caso a lista der erro, lançar menssagem
         } catch (ConexaoBDException e) {
 
             JOptionPane.showMessageDialog(this,
@@ -1003,7 +1004,7 @@ private void mostrarCard(String nomeCard) {
                     return false; // impede edição direta na tabela
                 }
             });
-
+          // lança a excessao em para  o ConexaoDB em forma de menssagem, se der erro na lista de avaliacaoes lanca menssagem de erro
         } catch (ConexaoBDException e) {
             JOptionPane.showMessageDialog(this,
                     "Erro ao listar avaliações: " + e.getMessage(),
@@ -1069,7 +1070,7 @@ private void mostrarCard(String nomeCard) {
 
             // 5. Atualizar a tabela para mostrar os novos resultados
             listarAvaliacoes();
-
+            // 6. Lança as Excessoes para se der erros mostrar a menssagem de erro relacionada ao projeto
         } catch (DadosInvalidosException | ConexaoBDException e) {
             JOptionPane.showMessageDialog(this, "Erro: " + e.getMessage());
         }
@@ -1096,10 +1097,10 @@ private void mostrarCard(String nomeCard) {
 
             // Adicionar cada ambiente como opção no combo
             for (Ambiente a : lista) {
-                // Exibe: "Estábulo Principal (28.5°C / 75.0%)"
+                // Exibe por Exemplo: "Estábulo Principal (28.5°C / 75.0%)"
                 cbAmbiente.addItem(a.toString());
             }
-
+            // Lança a excessão para o ConexaoDB para Se der erro ao carregar o ambiente msotrar a menssagem de erro
         } catch (ConexaoBDException e) {
             JOptionPane.showMessageDialog(this,
                     "Erro ao carregar ambientes: " + e.getMessage(),
@@ -1109,10 +1110,10 @@ private void mostrarCard(String nomeCard) {
     }
 
     /**
-     * Evento do botão "Registar Ambiente".
+     * Eventos de todos os Botoes associados a seus respectivos Metodos.
      *
-     * Lê os campos da tela, valida, converte para número e chama o service.
-     * Depois atualiza a tabela.
+     * Lê os campos da tela, valida, converte para número e chama o service, ou seja opearionaliza meu sistema todo.
+     * Depois atualiza as respecitvas tabelas.
      */
     private void btnRegistarAnimalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistarAnimalActionPerformed
         registarAnimal();
@@ -1147,7 +1148,7 @@ private void mostrarCard(String nomeCard) {
     }//GEN-LAST:event_btnApagarAmbienteActionPerformed
 
     /**
-     * @param args the command line arguments
+     * @param args Main da janela Principal
      */
     public static void main(String args[]) {
         try {
@@ -1161,15 +1162,12 @@ private void mostrarCard(String nomeCard) {
             java.util.logging.Logger.getLogger(ConfortAnimal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
 
-        /* Create and display the form */
+        /* Cria um form visivel da janela ConfortAnimal que e o menu principal do programa*/
         java.awt.EventQueue.invokeLater(() -> {
             new ConfortAnimal().setVisible(true);
 
         });
     }
-/**
- * 
- */
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane Ambiente;
     private javax.swing.JTable AmbienteTable;
@@ -1252,6 +1250,7 @@ private void mostrarCard(String nomeCard) {
      * Inicializa o painel Home com uma mensagem de boas-vindas simples.
      */
     private void inicializarHome() {
+        //Modelo de Home editada 
         cardHome.setLayout(new java.awt.GridBagLayout());
         cardHome.setBackground(new java.awt.Color(245, 250, 240));
         java.awt.GridBagConstraints gbc = new java.awt.GridBagConstraints();

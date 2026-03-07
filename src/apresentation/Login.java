@@ -5,8 +5,8 @@ import model.Usuario;
 import service.UsuarioService;
 
 /**
- *  * Classe Login - Interface gráfica para autenticação de utilizadores. Permite o
- * acesso ao sistema ConfortAnimal mediante nome de utilizador e senha válidos.
+ *  * Classe Login - Interface gráfica para autenticação de utilizadores. 
+ * Permite o acesso ao sistema ConfortAnimal mediante nome de utilizador e senha válidos.
  * Após login bem-sucedido, redireciona para a tela principal.
  *
  * Esta classe utiliza Swing (JFrame) e foi parcialmente gerada por IDE.
