@@ -258,7 +258,7 @@ public class AnimalDB {
                     conexao.close();
                 }
             } catch (SQLException e) {
-                System.err.println("Erro ao fechar recursos: " + e.getMessage());
+                throw new ConexaoBDException("Erro ao fechar recursos: " + e.getMessage());
             }
         }
     }

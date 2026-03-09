@@ -68,14 +68,14 @@ public class Conexao {
 
         try (Connection conexao = getConexao()) {
             if (conexao != null) {
-                System.out.println("SUCESSO! A conexão está a funcionar!");
+                System.out.println("SUCESSO! A conexao esta a funcionar!");
             }
         } catch (ConexaoBDException e) {
             System.out.println("ERRO! Verifica:");
             System.out.println("  1. O servidor está ligado?");
             System.out.println("  2. A base de dados existe?");
-            System.out.println("  3. O utilizador e senha estão corretos?");
-            System.out.println("  4. O JAR do MySQL está na pasta lib/?");
+            System.out.println("  3. O utilizador e senha estao corretos?");
+            System.out.println("  4. O JAR do MySQL esta na pasta lib/?");
             System.out.println("Detalhes: " + e.getMessage());
         }
 

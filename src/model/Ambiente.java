@@ -1,5 +1,6 @@
 package model;
 
+import exception.DadosInvalidosException;
 import java.time.LocalDateTime;
 
 /**
@@ -92,10 +93,11 @@ public class Ambiente {
      * Define a temperatura do ambiente.
      *
      * @param temperatura Valor da temperatura.
+     * @throws DadosInvalidosException lançada se a temperatura informada for negativa a -50ºC ou maior que 60ºC
      */
     public void setTemperatura(double temperatura) {
         if (temperatura < -50 || temperatura > 60) {
-            throw new IllegalArgumentException("Temperatura fora do intervalo aceitável.");
+            throw new DadosInvalidosException("Temperatura fora do intervalo aceitável.");
         }
         this.temperatura = temperatura;
     }
@@ -113,10 +115,11 @@ public class Ambiente {
      * Define a umidade do ambiente.
      *
      * @param umidade Valor da umidade.
+     * @throws DadosInvalidosException lançada se a umidade informada for menor que 0% ou maior que 100%
      */
     public void setUmidade(double umidade) {
         if (umidade < 0 || umidade > 100) {
-            throw new IllegalArgumentException("Umidade deve estar entre 0% e 100%.");
+            throw new DadosInvalidosException("Umidade deve estar entre 0% e 100%.");
         }
         this.umidade = umidade;
     }

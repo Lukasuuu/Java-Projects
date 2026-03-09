@@ -170,7 +170,7 @@ public class Bovino extends Animal {
     /**
      * Define a produção de leite do bovino.
      * @param producaoLeite Valor em litros por dia.
-     * @throws DadosInvalidosException se o valor for negativo.
+     * @throws DadosInvalidosException se o valor da producaoLeite for negativo.
      */
     public final void setProducaoLeite(double producaoLeite) {
         if (producaoLeite < 0) {
@@ -185,7 +185,7 @@ public class Bovino extends Animal {
      * Aqui, nós validamos e guardamos o peso no atributo herdado de Animal.
      *
      * @param peso Peso em kg (deve ser > 0).
-     * @throws DadosInvalidosException se o peso for inválido.
+     * @throws DadosInvalidosException se o peso for menor ou igual a 0kg.
      */
     public void setPeso(double peso) {
         if (peso <= 0) {
@@ -199,7 +199,7 @@ public class Bovino extends Animal {
      * Aqui guardamos no atributo herdado de Animal.
      *
      * @param idade Idade em meses (não pode ser negativa).
-     * @throws DadosInvalidosException se a idade for inválida.
+     * @throws DadosInvalidosException se a idade for menor que 0.
      */
     public void setIdade(int idade) {
         if (idade < 0) {

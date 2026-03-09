@@ -2,6 +2,7 @@ package persistence;
 
 import model.Usuario;
 import exception.ConexaoBDException;
+import exception.DadosInvalidosException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -24,13 +25,13 @@ public class UsuarioDB {
      * @param username Username do utilizador (login).
      * @param password Password correspondente.
      * @return Objeto Usuario se as credenciais forem válidas, ou null se inválidas.
-     * @throws IllegalArgumentException se os campos estiverem vazios.
+     * @throws DadosInvalidosException se os campos estiverem vazios.
      * @throws ConexaoBDException se ocorrer erro de conexão ou SQL.
      */
     public Usuario fazerLogin(String username, String password) throws ConexaoBDException {
         if (username == null || username.isBlank() ||
             password == null || password.isBlank()) {
-            throw new IllegalArgumentException("Preencha todos os campos obrigatórios.");
+            throw new DadosInvalidosException("Preencha todos os campos obrigatórios.");
         }
 
         String sql = "SELECT id, username, password, is_admin FROM usuario " +

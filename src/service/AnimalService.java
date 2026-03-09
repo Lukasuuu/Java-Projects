@@ -51,7 +51,7 @@ public class AnimalService {
      * @param raca Raça do bovino.
      * @param linhagem Linhagem do bovino.
      * @param producaoLeite Produção de leite (>= 0).
-     * @throws IllegalArgumentException se algum dado for inválido.
+     * @throws DadosInvalidosException se algum dado for inválido.
      * @throws ConexaoBDException se ocorrer erro na base de dados.
      */
     public void registarBovino(String nome, double peso, int idade,
@@ -59,22 +59,22 @@ public class AnimalService {
 
         // ===== Validações simples (iniciante) =====
         if (nome == null || nome.isBlank()) {
-            throw new IllegalArgumentException("O nome é obrigatório.");
+            throw new DadosInvalidosException("O nome é obrigatório.");
         }
         if (raca == null || raca.isBlank()) {
-            throw new IllegalArgumentException("A raça é obrigatória.");
+            throw new DadosInvalidosException("A raça é obrigatória.");
         }
         if (linhagem == null || linhagem.isBlank()) {
-            throw new IllegalArgumentException("A linhagem é obrigatória.");
+            throw new DadosInvalidosException("A linhagem é obrigatória.");
         }
         if (peso <= 0) {
-            throw new IllegalArgumentException("O peso deve ser maior que 0.");
+            throw new DadosInvalidosException("O peso deve ser maior que 0.");
         }
         if (idade < 0) {
-            throw new IllegalArgumentException("A idade não pode ser negativa.");
+            throw new DadosInvalidosException("A idade não pode ser negativa.");
         }
         if (producaoLeite < 0) {
-            throw new IllegalArgumentException("A produção de leite não pode ser negativa.");
+            throw new DadosInvalidosException("A produção de leite não pode ser negativa.");
         }
 
         // Chama a persistência (DB)

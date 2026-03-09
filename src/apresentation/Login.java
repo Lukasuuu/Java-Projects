@@ -1,5 +1,7 @@
 package apresentation;
 
+import exception.ConexaoBDException;
+import exception.DadosInvalidosException;
 import javax.swing.JOptionPane;
 import model.Usuario;
 import service.UsuarioService;
@@ -30,13 +32,6 @@ public class Login extends javax.swing.JFrame {
         setTitle("ConfortAnimal - Login");
         
     }
-
-    /**
-     * Construtor auxiliar (caso seja necessário receber parâmetros).
-     *
-     * @param aThis Referência à janela principal.
-     * @param b Flag de controle (não utilizado).
-     */
 
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -155,14 +150,14 @@ public class Login extends javax.swing.JFrame {
 
             dispose();
 
-        } catch (IllegalArgumentException e) {
+        } catch (DadosInvalidosException e) {
             // Campos vazios (lançado no UsuarioDB)
             JOptionPane.showMessageDialog(this,
                     e.getMessage(),
                     "Atenção",
                     JOptionPane.WARNING_MESSAGE);
 
-        } catch (exception.ConexaoBDException e) {
+        } catch (ConexaoBDException e) {
             // Erro de banco/conexão
             JOptionPane.showMessageDialog(this,
                     e.getMessage(),

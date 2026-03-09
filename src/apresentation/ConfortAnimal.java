@@ -612,7 +612,7 @@ private void mostrarCard(String nomeCard) {
 
     private void avaliacoesItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_avaliacoesItemActionPerformed
         mostrarCard("AVALIACOES");
-        carregarAmbientesNoCombo(); // carrega os ambientes ao abrir o painel
+        carregarAmbientesNoCombo(); // carrega os ambientes para ComboBox ao abrir o painel
         listarAvaliacoes();
     }//GEN-LAST:event_avaliacoesItemActionPerformed
 
@@ -685,13 +685,13 @@ private void mostrarCard(String nomeCard) {
                     "Erro",
                     JOptionPane.ERROR_MESSAGE);
 
-        } catch (exception.DadosInvalidosException e) {
+        } catch (DadosInvalidosException e) {
             JOptionPane.showMessageDialog(this,
                     "Erro ao registar:" + e.getMessage(),
                     "Dados inválidos",
                     JOptionPane.WARNING_MESSAGE);
 
-        } catch (exception.ConexaoBDException e) {
+        } catch (ConexaoBDException e) {
             JOptionPane.showMessageDialog(this,
                     e.getMessage(),
                     "Erro BD",
@@ -1085,7 +1085,7 @@ private void mostrarCard(String nomeCard) {
             // 5. Atualizar a tabela para mostrar os novos resultados
             listarAvaliacoes();
             // 6. Lança as Excessoes para se der erros mostrar a menssagem de erro relacionada ao projeto
-        } catch (DadosInvalidosException | ConexaoBDException e) {
+        } catch (DadosInvalidosException e) {
             JOptionPane.showMessageDialog(this, "Erro: " + e.getMessage());
         }
     }
@@ -1165,17 +1165,7 @@ private void mostrarCard(String nomeCard) {
      * @param args Main da janela Principal
      */
     public static void main(String args[]) {
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ConfortAnimal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-
+       
         /* Cria um form visivel da janela ConfortAnimal que e o menu principal do programa*/
         java.awt.EventQueue.invokeLater(() -> {
             new ConfortAnimal().setVisible(true);

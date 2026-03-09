@@ -1,5 +1,7 @@
 package model;
 
+import exception.DadosInvalidosException;
+
 /**
  * Representa um animal no sistema.
  * 
@@ -113,11 +115,11 @@ public class Animal {
     /**
      * Define o peso do animal.
      * @param peso Peso em kg a ser atribuído no peso do animal.
-     * @throws IllegalArgumentException se o peso for negativo.
+     * @throws DadosInvalidosException se o peso for negativo.
      */
     private void setPeso(double peso) {
         if (peso < 0) {
-            throw new IllegalArgumentException("O peso não pode ser negativo.");
+            throw new DadosInvalidosException("O peso não pode ser negativo.");
         }
         this.peso = peso;
     }
@@ -133,11 +135,11 @@ public class Animal {
     /**
      * Define a idade do animal.
      * @param idade Idade em meses a ser atribuído na idade do animal.
-     * @throws IllegalArgumentException se a idade for negativa.
+     * @throws DadosInvalidosException se a idade for negativa.
      */
     private void setIdade(int idade) {
         if (idade < 0) {
-            throw new IllegalArgumentException("A idade não pode ser negativa.");
+            throw new DadosInvalidosException("A idade não pode ser negativa.");
         }
         this.idade = idade;
     }
