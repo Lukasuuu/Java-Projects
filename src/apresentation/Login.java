@@ -19,7 +19,7 @@ import service.UsuarioService;
  */
 public class Login extends javax.swing.JFrame {
 
-    private final UsuarioService usuarioService = new UsuarioService();
+    private final UsuarioService usuario = new UsuarioService();
 
     /**
      * Construtor padrão da janela de login.
@@ -127,7 +127,7 @@ public class Login extends javax.swing.JFrame {
 
         // 2) Validar no banco
         try {
-            Usuario u = usuarioService.autenticar(username, password);
+            Usuario u = usuario.autenticar(username, password);
 
             // 3) Se u == null, login inválido
             if (u == null) {

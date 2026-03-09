@@ -68,8 +68,8 @@ public class AmbienteDB {
         ArrayList<Ambiente> lista = new ArrayList<>();
 
         try ( Connection con = Conexao.getConexao();  
-                PreparedStatement st = con.prepareStatement(sql);  
-                ResultSet rs = st.executeQuery()) {
+              PreparedStatement st = con.prepareStatement(sql);  
+              ResultSet rs = st.executeQuery()) {
 
             while (rs.next()) {
 

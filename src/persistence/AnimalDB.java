@@ -54,10 +54,10 @@ public class AnimalDB {
             String raca, String linhagem, double producaoLeite) throws ConexaoBDException {
 
         // SQL de inserção na tabela animal (apenas dados comuns)
-        final String sqlAnimal = "INSERT INTO animal (nome, peso, idade) VALUES (?, ?, ?)";
+        final String sqlAnimal = "INSERT INTO animal (nome, peso, idade)" + "VALUES (?, ?, ?)";
 
         // SQL de inserção na tabela bovino (dados específicos + FK animal_id)
-        final String sqlBovino = "INSERT INTO bovino (animal_id, raca, linhagem, producao_leite) VALUES (?, ?, ?, ?)";
+        final String sqlBovino = "INSERT INTO bovino (animal_id, raca, linhagem, producao_leite" + "VALUES (?, ?, ?, ?)";
 
         try ( Connection con = Conexao.getConexao()) {
 
@@ -118,7 +118,7 @@ public class AnimalDB {
      */
     public int inserirAnimal(Animal animal) throws ConexaoBDException {
 
-        final String sql = "INSERT INTO animal (nome, peso, idade) VALUES (?, ?, ?)";
+        final String sql = "INSERT INTO animal (nome, peso, idade)" + "VALUES (?, ?, ?)";
 
         try ( Connection con = Conexao.getConexao();  
               PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -150,7 +150,7 @@ public class AnimalDB {
      */
     public void inserirBovino(Bovino bovino) throws ConexaoBDException {
 
-        final String sql = "INSERT INTO bovino (animal_id, raca, linhagem, producao_leite) VALUES (?, ?, ?, ?)";
+        final String sql = "INSERT INTO bovino (animal_id, raca, linhagem, producao_leite)" + "VALUES (?, ?, ?, ?)";
 
         try ( Connection con = Conexao.getConexao();  
               PreparedStatement ps = con.prepareStatement(sql)) {
@@ -184,7 +184,9 @@ public class AnimalDB {
 
         ArrayList<Bovino> lista = new ArrayList<>();
 
-        try ( Connection con = Conexao.getConexao();  PreparedStatement ps = con.prepareStatement(sql);  ResultSet rs = ps.executeQuery()) {
+        try ( Connection con = Conexao.getConexao();  
+              PreparedStatement ps = con.prepareStatement(sql);  
+              ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
 
