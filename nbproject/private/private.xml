@@ -6,12 +6,15 @@
             <file>file:/C:/Users/luc__/Documents/NetBeansProjects/Java-Projects/src/persistence/DBWorker.java</file>
             <file>file:/C:/Users/luc__/Documents/NetBeansProjects/Java-Projects/src/service/AnimalService.java</file>
             <file>file:/C:/Users/luc__/Documents/NetBeansProjects/Java-Projects/src/persistence/AvaliacaoDB.java</file>
-            <file>file:/C:/Users/luc__/Documents/NetBeansProjects/Java-Projects/src/persistence/BovinoDB.java</file>
-            <file>file:/C:/Users/luc__/Documents/NetBeansProjects/Java-Projects/src/persistence/Conexao.java</file>
-            <file>file:/C:/Users/luc__/Documents/NetBeansProjects/Java-Projects/src/persistence/UsuarioDB.java</file>
+            <file>file:/C:/Users/luc__/Documents/NetBeansProjects/Java-Projects/src/apresentation/ConfortAnimal.java</file>
+            <file>file:/C:/Users/luc__/Documents/NetBeansProjects/Java-Projects/src/service/UtilizadorService.java</file>
+            <file>file:/C:/Users/luc__/Documents/NetBeansProjects/Java-Projects/src/exception/ConexaoBDException.java</file>
+            <file>file:/C:/Users/luc__/Documents/NetBeansProjects/Java-Projects/src/persistence/UtilizadorDB.java</file>
             <file>file:/C:/Users/luc__/Documents/NetBeansProjects/Java-Projects/src/persistence/AmbienteDB.java</file>
-            <file>file:/C:/Users/luc__/Documents/NetBeansProjects/Java-Projects/src/persistence/AnimalDB.java</file>
-            <file>file:/C:/Users/luc__/Documents/NetBeansProjects/Java-Projects/src/service/AmbienteService.java</file>
+            <file>file:/C:/Users/luc__/Documents/NetBeansProjects/Java-Projects/src/service/AvaliacaoService.java</file>
+            <file>file:/C:/Users/luc__/Documents/NetBeansProjects/Java-Projects/src/model/Utilizador.java</file>
+            <file>file:/C:/Users/luc__/Documents/NetBeansProjects/Java-Projects/src/model/Bovino.java</file>
+            <file>file:/C:/Users/luc__/Documents/NetBeansProjects/Java-Projects/src/apresentation/Login.java</file>
         </group>
     </open-files>
 </project-private>

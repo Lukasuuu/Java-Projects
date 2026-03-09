@@ -2,8 +2,8 @@
 package service;
 
 import exception.ConexaoBDException;
-import persistence.UsuarioDB;
-import model.Usuario;
+import persistence.UtilizadorDB;
+import model.Utilizador;
 
 /**
   * Classe UsuarioService - Camada de serviço para regras de negócio do utilizador.
@@ -16,15 +16,15 @@ import model.Usuario;
  * @version 1.0
  * @since 2026-03-06
  */
-public class UsuarioService {
-    private final UsuarioDB usuarioDB;
+public class UtilizadorService {
+    private final UtilizadorDB usuarioDB;
     
     /**
      * Construtor padrão.
      * Inicializa o acesso à camada de persistência.
      */
-    public UsuarioService() {
-        this.usuarioDB = new UsuarioDB();
+    public UtilizadorService() {
+        this.usuarioDB = new UtilizadorDB();
     }
       /**
      * Autentica um utilizador (login).
@@ -33,10 +33,10 @@ public class UsuarioService {
      * Se as credenciais estiverem erradas, retorna null
      * @param username Nome de utilizador (login).
      * @param password Senha.
-     * @return Usuario autenticado ou null se inválido.
+     * @return Utilizador autenticado ou null se inválido.
      * @throws ConexaoBDException se houver erro na base de dados.
      */
-    public Usuario autenticar(String username, String password) throws ConexaoBDException {
+    public Utilizador autenticar(String username, String password) throws ConexaoBDException {
         
         if(username == null || username.isBlank()){
             throw new ConexaoBDException("Informe o utilizador.");

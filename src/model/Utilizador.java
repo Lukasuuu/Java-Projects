@@ -11,7 +11,7 @@ package model;
  * @version 1.0
  * @since 2026-03-06
  */
-public class Usuario {
+public class Utilizador {
 
     private int id;
     private String username;
@@ -21,7 +21,7 @@ public class Usuario {
     /**
      * Construtor vazio (útil para frameworks/DAO).
      */
-    public Usuario() {
+    public Utilizador() {
     }
 
     /**
@@ -32,7 +32,7 @@ public class Usuario {
      * @param password Senha do utilizador.
      * @param isAdmin Indica se o utilizador é administrador.
      */
-    public Usuario(int id, String username, String password, boolean isAdmin) {
+    public Utilizador(int id, String username, String password, boolean isAdmin) {
         this.id = id;
         this.username = username;
         this.password = password;

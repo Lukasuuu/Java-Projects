@@ -3,8 +3,8 @@ package apresentation;
 import exception.ConexaoBDException;
 import exception.DadosInvalidosException;
 import javax.swing.JOptionPane;
-import model.Usuario;
-import service.UsuarioService;
+import model.Utilizador;
+import service.UtilizadorService;
 
 /**
  *  * Classe Login - Interface gráfica para autenticação de utilizadores. 
@@ -19,7 +19,7 @@ import service.UsuarioService;
  */
 public class Login extends javax.swing.JFrame {
 
-    private final UsuarioService usuario = new UsuarioService();
+    private final UtilizadorService usuario = new UtilizadorService();
 
     /**
      * Construtor padrão da janela de login.
@@ -127,7 +127,7 @@ public class Login extends javax.swing.JFrame {
 
         // 2) Validar no banco
         try {
-            Usuario u = usuario.autenticar(username, password);
+            Utilizador u = usuario.autenticar(username, password);
 
             // 3) Se u == null, login inválido
             if (u == null) {

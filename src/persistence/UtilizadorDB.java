@@ -1,6 +1,6 @@
 package persistence;
 
-import model.Usuario;
+import model.Utilizador;
 import exception.ConexaoBDException;
 import exception.DadosInvalidosException;
 import java.sql.Connection;
@@ -17,18 +17,18 @@ import java.sql.SQLException;
  * @version 1.0
  * @since 2026-03-06
  */
-public class UsuarioDB {
+public class UtilizadorDB {
 
     /**
      * Realiza o login de um utilizador com base no username e password.
      *
      * @param username Username do utilizador (login).
      * @param password Password correspondente.
-     * @return Objeto Usuario se as credenciais forem válidas, ou null se inválidas.
+     * @return Objeto Utilizador se as credenciais forem válidas, ou null se inválidas.
      * @throws DadosInvalidosException se os campos estiverem vazios.
      * @throws ConexaoBDException se ocorrer erro de conexão ou SQL.
      */
-    public Usuario fazerLogin(String username, String password) throws ConexaoBDException {
+    public Utilizador fazerLogin(String username, String password) throws ConexaoBDException {
         if (username == null || username.isBlank() ||
             password == null || password.isBlank()) {
             throw new DadosInvalidosException("Preencha todos os campos obrigatórios.");
@@ -46,7 +46,7 @@ public class UsuarioDB {
             try (ResultSet rs = ps.executeQuery()) {
 
                 if (rs.next()) {
-                    return new Usuario(
+                    return new Utilizador(
                         rs.getInt("id"),
                         rs.getString("username"),
                         rs.getString("password"),
