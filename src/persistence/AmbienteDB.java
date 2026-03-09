@@ -39,7 +39,8 @@ public class AmbienteDB {
 
         String sql = "INSERT INTO ambiente (temperatura, umidade, local) VALUES (?, ?, ?)";
 
-        try ( Connection con = Conexao.getConexao();  PreparedStatement st = con.prepareStatement(sql)) {
+        try ( Connection con = Conexao.getConexao();  
+              PreparedStatement st = con.prepareStatement(sql)) {
 
             st.setDouble(1, ambiente.getTemperatura());
             st.setDouble(2, ambiente.getUmidade());
@@ -66,7 +67,9 @@ public class AmbienteDB {
 
         ArrayList<Ambiente> lista = new ArrayList<>();
 
-        try ( Connection con = Conexao.getConexao();  PreparedStatement st = con.prepareStatement(sql);  ResultSet rs = st.executeQuery()) {
+        try ( Connection con = Conexao.getConexao();  
+                PreparedStatement st = con.prepareStatement(sql);  
+                ResultSet rs = st.executeQuery()) {
 
             while (rs.next()) {
 
@@ -122,8 +125,11 @@ public class AmbienteDB {
             if (linhasAfetadas == 0) {
                 throw new ConexaoBDException("Ambiente com ID " + ambienteId + " não foi encontrado!");
             }
-
-            System.out.println("[AmbienteDB] Ambiente apagado. Linhas afetadas: " + linhasAfetadas);
+            
+            if ((linhasAfetadas > 0)) {
+                System.out.println("[AmbienteDB] Ambiente apagado. Linhas afetadas: " + linhasAfetadas);
+            }
+            
 
         } catch (SQLException e) {
             throw new ConexaoBDException("Erro ao apagar ambiente: " + e.getMessage(), e);

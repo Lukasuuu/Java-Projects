@@ -242,8 +242,10 @@ public class AnimalDB {
             if (linhasAfetadas == 0) {
                 throw new ConexaoBDException("Animal com ID " + animalId + " não foi encontrado!");
             }
-
-            System.out.println("[AnimalDB] Animal apagado. Linhas afetadas: " + linhasAfetadas);
+            if (linhasAfetadas > 0) {
+                System.out.println("[AnimalDB] Animal apagado. Linhas afetadas: " + linhasAfetadas);
+            }
+            
 
         } catch (SQLException e) {
             throw new ConexaoBDException("Erro ao apagar animal: " + e.getMessage(), e);

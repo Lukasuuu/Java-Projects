@@ -52,7 +52,8 @@ public class UsuarioDB {
                         rs.getString("password"),
                         rs.getBoolean("is_admin")
                     );
-                } else {
+                } 
+                else {
                     System.out.println("Utilizador ou password incorretos.");
                 }
             }
