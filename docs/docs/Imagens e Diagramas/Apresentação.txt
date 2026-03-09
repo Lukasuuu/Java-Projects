@@ -1,0 +1,298 @@
+========================================
+  SCRIPT DA APRESENTAÇÃO
+========================================
+
+
+SLIDE 1: CAPA
+-------------
+"Bom dia/Boa tarde! Hoje vou apresentar o ConfortAnimal, 
+um sistema que desenvolvi para avaliar o conforto térmico 
+de bovinos. O projeto foi desenvolvido em Java com MySQL 
+e aplica conceitos avançados de programação orientada a 
+objetos."
+
+
+SLIDE 2: O PROBLEMA
+-------------------
+"O estresse térmico é um problema sério na pecuária. Quando 
+os bovinos estão expostos a altas temperaturas e umidade, 
+isso reduz a produção de leite em até 30% e causa problemas 
+de saúde.
+
+Para resolver isto, os produtores precisam medir o conforto 
+térmico de forma objetiva. É aqui que entra o ITU - Índice 
+de Temperatura e Umidade, uma métrica científica reconhecida 
+internacionalmente."
+
+
+SLIDE 3: A SOLUÇÃO
+------------------
+"O ConfortAnimal automatiza todo este processo.
+
+Permite cadastrar bovinos com todas as suas características - 
+raça, linhagem, produção de leite.
+
+Registar condições ambientais - temperatura e umidade de 
+cada local.
+
+E o sistema calcula automaticamente o ITU usando esta fórmula 
+científica, classificando o resultado em três zonas: 
+Conforto, Alerta ou Estresse.
+
+Assim o produtor sabe exatamente quando precisa tomar medidas."
+
+
+SLIDE 4: ARQUITETURA
+--------------------
+"O projeto segue uma arquitetura em três camadas.
+
+Na camada de Apresentação, temos a interface gráfica em Swing.
+
+A camada de Service contém a lógica de negócio - validações, 
+cálculos do ITU, regras.
+
+A camada de Persistence comunica com a base de dados via JDBC.
+
+E o MySQL numa base remota que armazena todos os dados.
+
+Esta separação facilita manutenção e expansão do sistema."
+
+
+
+SLIDE 5: MODELO DE DADOS
+-------------------------
+"O modelo usa 5 entidades principais.
+
+Usuário para autenticação.
+
+Animal e Bovino implementam herança - Animal é a classe pai 
+com propriedades comuns, Bovino é a classe filha que adiciona 
+características específicas. Esta é uma herança explícita 
+com duas tabelas no MySQL.
+
+Ambiente armazena condições climáticas.
+
+E Avaliação conecta um bovino com um ambiente e guarda o 
+resultado do ITU.
+
+Os relacionamentos garantem integridade com foreign keys 
+e CASCADE."
+
+
+SLIDE 6: CONCEITOS OOP
+----------------------
+"O projeto demonstra os principais conceitos de POO.
+
+HERANÇA: Bovino herda de Animal. Usei protected para as 
+propriedades do pai poderem ser validadas no filho.
+
+ENCAPSULAMENTO: Todos os atributos são privados e acessados 
+através de getters e setters que validam os dados.
+
+POLIMORFISMO: Posso ter uma lista de Animal que contém 
+objetos Bovino.
+
+EXCEÇÕES PERSONALIZADAS: Criei três tipos - dados inválidos, 
+erros de conexão, e exceções gerais.
+
+VALIDAÇÃO: O método validar() verifica todos os campos antes 
+de inserir na base de dados."
+
+
+SLIDE 7: DEMO - LOGIN
+---------------------
+"Vou agora demonstrar o sistema.
+
+[MOSTRA A APLICAÇÃO]
+
+Primeiro temos a tela de login com autenticação em dois 
+níveis - administrador e utilizador normal.
+
+[FAZ LOGIN com admin/admin]
+
+Após o login, vamos para a tela principal."
+
+
+SLIDE 8: DEMO - BOVINOS
+-----------------------
+"Na aba Animal, cadastro os bovinos.
+
+[VAI PARA ABA ANIMAL]
+
+Vou cadastrar um exemplo:
+
+[PREENCHE]
+Nome: Mimosa
+Raça: Holstein
+Linhagem: LEITE
+Peso: 450 kg
+Idade: 36 meses
+Produção: 25.5 litros/dia
+
+[CLICA REGISTAR]
+
+O sistema valida todos os campos. Se eu tentar peso zero 
+ou nome vazio, ele não permite.
+
+[CLICA LISTAR]
+
+Aqui estão todos os bovinos cadastrados, trazidos através 
+de um JOIN entre as tabelas animal e bovino.
+
+[SELECIONA UMA LINHA E CLICA APAGAR]
+
+Também posso apagar. O sistema pede confirmação porque 
+esta operação apaga também todas as avaliações associadas, 
+graças ao CASCADE configurado."
+
+
+SLIDE 9: DEMO - AMBIENTE
+------------------------
+"Na aba Ambiente, registo as condições climáticas.
+
+[VAI PARA ABA AMBIENTE]
+
+Vou criar um exemplo:
+
+[PREENCHE]
+Local: Estábulo Principal
+Temperatura: 28.5°C
+Umidade: 75%
+
+[CLICA REGISTAR]
+
+O sistema regista automaticamente a data e hora.
+
+[CLICA LISTAR]
+
+Aqui vemos todos os ambientes. Posso ter vários locais - 
+estábulos, pastos, currais."
+
+
+SLIDE 10: DEMO - AVALIAÇÕES
+---------------------------
+"Agora a parte mais importante - as avaliações.
+
+[VAI PARA ABA AVALIAÇÕES]
+
+[SELECIONA UM AMBIENTE NO COMBOBOX]
+
+Primeiro seleciono o ambiente. Vou escolher 'Estábulo 
+Principal (28.5°C / 75%)'.
+
+[CLICA GERAR AVALIAÇÕES]
+
+Quando clico, o sistema:
+1. Busca todos os bovinos
+2. Para cada um, calcula o ITU
+3. Classifica o resultado
+4. Grava na base de dados
+
+[SISTEMA MOSTRA: '5 avaliação(ões) gerada(s)!']
+
+[CLICA LISTAR AVALIAÇÕES]
+
+Aqui vemos os resultados. Para cada animal vemos:
+Nome, Local, Valor do ITU, Resultado e Data.
+
+Neste caso, com 28.5°C e 75% de umidade, o ITU ficou em 
+79.77 - zona de ESTRESSE. O produtor sabe que precisa 
+tomar medidas urgentes como ventiladores, sombra, água 
+fresca."
+
+
+SLIDE 11: EXCEÇÕES
+------------------
+"O sistema tem tratamento robusto de exceções.
+
+Criei uma hierarquia com ProjetoException como base e 
+três especializações.
+
+DadosInvalidosException para dados inválidos.
+ConexaoBDException para erros de conexão.
+
+Todas as operações têm try-catch e mostram mensagens 
+claras ao utilizador."
+
+
+
+SLIDE 12: TECNOLOGIAS
+---------------------
+"O projeto foi desenvolvido com tecnologias modernas.
+
+Java SE 21, a versão mais recente, usando NetBeans.
+
+Interface gráfica em Swing com componentes como JTable 
+e CardLayout.
+
+MySQL 8.0 numa base remota acessível via JDBC.
+
+E todo o código está versionado no GitHub."
+
+
+SLIDE 13: DIFERENCIAIS
+----------------------
+"Os principais diferenciais:
+
+Implementação de herança explícita com duas tabelas no 
+MySQL, que demonstra claramente o conceito.
+
+Arquitetura profissional em três camadas.
+
+Validação completa em várias camadas.
+
+Cálculo científico real - a fórmula do ITU é usada 
+mundialmente.
+
+Interface intuitiva.
+
+E base de dados remota acessível de qualquer lugar."
+
+
+SLIDE 14: MELHORIAS
+-------------------
+"Para o futuro, várias possibilidades:
+
+Adicionar gráficos para visualização.
+
+Implementar alertas automáticos por email ou SMS.
+
+Gerar relatórios em PDF.
+
+Expandir para múltiplas propriedades.
+
+Versão mobile para acesso no campo.
+
+E até Machine Learning para previsões e recomendações."
+
+
+SLIDE 15: CONCLUSÃO
+-------------------
+"Para concluir, todos os objetivos foram alcançados.
+
+Sistema funcional e completo que aplica corretamente 
+POO, tem arquitetura profissional e resolve um problema 
+real.
+
+Os principais aprendizados foram herança tanto no Java 
+quanto no MySQL, arquitetura em camadas, JDBC, e Swing.
+
+Mais importante: não é apenas um projeto académico. É 
+uma ferramenta que pode realmente ajudar produtores a 
+melhorar o bem-estar dos animais e a produtividade.
+
+O código está no GitHub.
+
+Obrigado pela atenção! Perguntas?"
+
+========================================
+  DICAS RÁPIDAS
+========================================
+
+✓ Pratica 3 vezes antes
+✓ Testa a aplicação 5 vezes
+✓ Cronometra cada parte
+
+✓ Água ao lado
+✓ Respira fundo
+✓ Diverte-te!

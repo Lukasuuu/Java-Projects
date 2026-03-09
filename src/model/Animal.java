@@ -1,41 +1,67 @@
 package model;
 
 /**
- * Classe Animal - Superclasse que representa um animal genérico.
- * Contém propriedades comuns a todos os tipos de animais.
- * Pode ser estendida por outras classes como Bovino.
+ * Representa um animal no sistema.
  * 
- * @author Lucas
+ * <p>Classe base que contém propriedades comuns a todos os tipos
+ * de animais. Utiliza modificador {@code protected} para permitir
+ * acesso nas classes filhas.</p>
+ * 
+ * <p>Esta classe é parte da hierarquia de herança:
+ * <pre>
+ * Animal (PAI)
+ *   └── Bovino (FILHO)
+ * </pre>
+ * </p>
+ * 
+ * <p>Na base de dados, utiliza estratégia "Class Table Inheritance"
+ * com duas tabelas: {@code animal} (PAI) e {@code bovino} (FILHO).</p>
+ * 
+ * @author Lucas Gonçalves
+ * @version 1.0
+ * @since 2026-03-06
+ * @see Bovino
  */
 public class Animal {
 
-    // ========== PROPRIEDADES COMUNS ==========
-
-    /** ID único do animal */
+     
+    /**
+     * ID único do animal.
+     * Chave primária na tabela animal.
+     */
     protected int id;
 
-    /** Nome do animal */
+    /**
+     * Nome do animal. 
+     * Não pode ser vazio.
+     */
     protected String nome;
 
-    /** Peso do animal em quilogramas */
+    /**
+     * Peso do animal em quilogramas. 
+     * Deve ser maior que zero.
+     */
     protected double peso;
 
-    /** Idade do animal em meses */
+    /**
+     * Idade do animal em meses. 
+     * Deve ser maior ou igual a zero.
+     */
     protected int idade;
 
     /**
-     * Construtor vazio.
-     * Usado para criar um objeto Animal sem definir os atributos inicialmente.
+     * Cria uma nova instância de Animal. 
+     * Todos os campos são inicializados com valores padrão.
      */
     public Animal() {}
 
     /**
-     * Construtor com parâmetros.
-     * 
-     * @param id ID do animal.
-     * @param nome Nome do animal.
-     * @param peso Peso do animal em kg.
-     * @param idade Idade do animal em meses.
+     * Cria uma nova instância de Animal com valores especificados.
+     *
+     * @param id ID único do animal
+     * @param nome nome do animal
+     * @param peso peso em quilogramas
+     * @param idade idade em meses
      */
     public Animal(int id, String nome, double peso, int idade) {
         this.id = id;
@@ -46,7 +72,7 @@ public class Animal {
 
     /**
      * Retorna o ID do animal.
-     * @return ID numérico.
+     * @return ID numérico do animal.
      */
     public int getId() {
         return id;
@@ -54,7 +80,7 @@ public class Animal {
 
     /**
      * Define o ID do animal.
-     * @param id Valor numérico do ID.
+     * @param id a ser atribuído ao ID.
      */
     public void setId(int id) {
         this.id = id;
@@ -70,7 +96,7 @@ public class Animal {
 
     /**
      * Define o nome do animal.
-     * @param nome Nome a ser atribuído.
+     * @param nome Nome a ser atribuído no nome do animal.
      */
     public void setNome(String nome) {
         this.nome = nome;
@@ -78,7 +104,7 @@ public class Animal {
 
     /**
      * Retorna o peso do animal.
-     * @return Peso em kg.
+     * @return Peso em kg 
      */
     public double getPeso() {
         return peso;
@@ -86,7 +112,7 @@ public class Animal {
 
     /**
      * Define o peso do animal.
-     * @param peso Peso em kg.
+     * @param peso Peso em kg a ser atribuído no peso do animal.
      * @throws IllegalArgumentException se o peso for negativo.
      */
     private void setPeso(double peso) {
@@ -106,7 +132,7 @@ public class Animal {
 
     /**
      * Define a idade do animal.
-     * @param idade Idade em meses.
+     * @param idade Idade em meses a ser atribuído na idade do animal.
      * @throws IllegalArgumentException se a idade for negativa.
      */
     private void setIdade(int idade) {

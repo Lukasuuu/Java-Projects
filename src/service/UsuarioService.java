@@ -14,7 +14,10 @@ import model.Usuario;
  * Validar dados vindos da interface (Login)
  * Chamar a persistência (UsuarioDB)
  * Deixar a JFrame mais limpa
- * @author Lucas
+ * 
+ * @author Lucas Gonçalves
+ * @version 1.0
+ * @since 2026-03-06
  */
 public class UsuarioService {
     private final UsuarioDB usuarioDB;

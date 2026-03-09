@@ -11,7 +11,9 @@ import service.UsuarioService;
  *
  * Esta classe utiliza Swing (JFrame) e foi parcialmente gerada por IDE.
  * 
- * @author Lucas
+ * @author Lucas Gonçalves
+ * @version 1.0
+ * @since 2026-03-06
  */
 public class Login extends javax.swing.JFrame {
 

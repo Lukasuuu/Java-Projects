@@ -13,7 +13,18 @@ import exception.ConexaoBDException;
  * - Armazena os dados do servidor, base de dados, utilizador e senha.
  * - O método getConexao() retorna uma Connection ativa.
  * 
- * @author Lucas
+ * <p>Configuração:
+ * <ul>
+ *   <li>Host: 62.28.39.135</li>
+ *   <li>Porta: 3306</li>
+ *   <li>Base de dados: efa0125_08_projeto_java</li>
+ *   <li>Utilizador: efa0125_08</li>
+ * </ul>
+ * </p>
+ * 
+ * @author Lucas Gonçalves
+ * @version 1.0
+ * @since 2026-03-06
  */
 public class Conexao {
 

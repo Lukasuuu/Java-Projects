@@ -11,7 +11,9 @@ import java.sql.*;
  * OBS: Esta classe é útil para testes rápidos ou comandos diretos.
  * Para uso em produção, prefira DAOs específicos como AnimalDB.
  * 
- * @author Lucas
+ * @author Lucas Gonçalves
+ * @version 1.0
+ * @since 2026-03-06
  */
 public class DBWorker {
 

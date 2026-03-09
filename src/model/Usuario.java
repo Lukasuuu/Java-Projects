@@ -6,8 +6,10 @@ package model;
  * - username (login)
  * - password (senha)
  * - isAdmin (se é administrador)
- *
- * @author Lucas
+ * 
+ * @author Lucas Gonçalves
+ * @version 1.0
+ * @since 2026-03-06
  */
 public class Usuario {
 

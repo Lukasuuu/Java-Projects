@@ -17,7 +17,9 @@ import model.Avaliacao;
  * Esta classe apenas executa SQL.
  * As regras e o cálculo do ITU ficam na camada Service.
  *
- * @author Lucas
+ * @author Lucas Gonçalves
+ * @version 1.0
+ * @since 2026-03-06
  */
 public class AvaliacaoDB {
 

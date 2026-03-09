@@ -21,14 +21,20 @@ import persistence.AnimalDB;
  * <li>Deixar a JFrame mais limpa e organizada</li>
  * </ul>
  *
- * @author Lucas
+ * @author Lucas Goncalves
+ * @version 1.0
+ * @since 2026-03-06
+ * @see AnimalDB
+ * @see Bovino
  */
 public class AnimalService {
 
     private final AnimalDB animalDB;
 
     /**
-     * Construtor padrão. Inicializa o acesso à camada de persistência.
+     * Construtor padrão. 
+     * Inicializa o acesso à camada de persistência.
+     * Regista um novo bovino na base de dados.
      */
     public AnimalService() {
         this.animalDB = new AnimalDB();
@@ -36,6 +42,8 @@ public class AnimalService {
 
     /**
      * Regista um bovino (Animal + Bovino) na base de dados.
+     * <p>Valida todos os campos antes de persistir. Utiliza transação
+     * para garantir consistência entre as tabelas animal e bovino.</p>
      *
      * @param nome Nome do animal.
      * @param peso Peso em kg (> 0).
@@ -85,10 +93,13 @@ public class AnimalService {
 
     /**
      * Apaga um animal da base de dados.
-     *
+     * 
+     * <p><strong>ATENÇÃO:</strong> Esta operação é irreversível.
+     * Todas as avaliações associadas também serão apagadas.</p>
+     * 
      * @param animalId ID do animal a apagar
      * @throws DadosInvalidosException se o ID for inválido
-     * @throws ConexaoBDException se houver erro de BD
+     * @throws ConexaoBDException se houver erro de conexão
      */
     public void apagar(int animalId) throws DadosInvalidosException {
 

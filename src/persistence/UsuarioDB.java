@@ -12,7 +12,9 @@ import java.sql.SQLException;
  * relacionadas com a entidade Usuario.
  * Permite autenticar utilizadores com base no username e password.
  *
- * @author Lucas
+ * @author Lucas Gonçalves
+ * @version 1.0
+ * @since 2026-03-06
  */
 public class UsuarioDB {
 

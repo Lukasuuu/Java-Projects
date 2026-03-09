@@ -1,20 +1,56 @@
 package model;
 
+import exception.DadosInvalidosException;
+
 /**
- * Classe Bovino - representa um animal do tipo bovino.
- * Esta classe herda da superclasse {@link Animal} e adiciona propriedades específicas
- * como raça, linhagem e produção de leite.
- *
- * HERANÇA: Bovino possui todos os atributos de Animal + os seus próprios.
- *
- * NOTA (Base de Dados):
- * No schema atual, Bovino está ligado ao Animal por 1:1 através de animal_id.
- * Por isso, este modelo guarda também o animalId (FK) quando necessário.
- *
- * @author Lucas
+ * Representa um bovino no sistema.
+ * 
+ * <p>Herda todas as propriedades de {@link Animal} e adiciona
+ * características específicas de bovinos como raça, linhagem
+ * e produção de leite.</p>
+ * 
+ * <p>Linhagens suportadas:
+ * <ul>
+ *   <li>LEITE - bovinos leiteiros</li>
+ *   <li>CARNE - bovinos de corte</li>
+ *   <li>DUPLA_APTIDAO - bovinos mistos</li>
+ * </ul>
+ * </p>
+ * 
+ * <p>Exemplo de uso:
+ * <pre>
+ * Bovino bovino = new Bovino();
+ * bovino.setNome("Mimosa");
+ * bovino.setRaca("Holstein");
+ * bovino.setLinhagem("LEITE");
+ * bovino.setProducaoLeite(25.5);
+ * bovino.validar(); // Valida todos os campos
+ * </pre>
+ * </p>
+ * 
+ * @author Lucas Gonçalves
+ * @version 1.0
+ * @since 2026-03-06
+ * @see Animal
  */
 public class Bovino extends Animal {
-
+    /**
+     * Valida todos os campos do bovino.
+     * 
+     * <p>Verifica:
+     * <ul>
+     *   <li>Nome não pode ser vazio</li>
+     *   <li>Peso deve ser maior que zero</li>
+     *   <li>Idade não pode ser negativa</li>
+     *   <li>Raça não pode ser vazia</li>
+     *   <li>Linhagem não pode ser vazia</li>
+     *   <li>Produção de leite não pode ser negativa</li>
+     * </ul>
+     * </p>
+     * 
+     * @throws DadosInvalidosException se algum campo for inválido
+     */
+    
     /** ID do animal na tabela "animal" (chave estrangeira em bovino.animal_id). */
     private int animalId;
 
@@ -134,11 +170,11 @@ public class Bovino extends Animal {
     /**
      * Define a produção de leite do bovino.
      * @param producaoLeite Valor em litros por dia.
-     * @throws IllegalArgumentException se o valor for negativo.
+     * @throws DadosInvalidosException se o valor for negativo.
      */
-    public void setProducaoLeite(double producaoLeite) {
+    public final void setProducaoLeite(double producaoLeite) {
         if (producaoLeite < 0) {
-            throw new IllegalArgumentException("A produção de leite não pode ser negativa.");
+            throw new DadosInvalidosException("A produção de leite não pode ser negativa.");
         }
         this.producaoLeite = producaoLeite;
     }
@@ -149,11 +185,11 @@ public class Bovino extends Animal {
      * Aqui, nós validamos e guardamos o peso no atributo herdado de Animal.
      *
      * @param peso Peso em kg (deve ser > 0).
-     * @throws IllegalArgumentException se o peso for inválido.
+     * @throws DadosInvalidosException se o peso for inválido.
      */
     public void setPeso(double peso) {
         if (peso <= 0) {
-            throw new IllegalArgumentException("O peso deve ser maior que 0.");
+            throw new DadosInvalidosException("O peso deve ser maior que 0.");
         }
         this.peso = peso;
     }
@@ -163,11 +199,11 @@ public class Bovino extends Animal {
      * Aqui guardamos no atributo herdado de Animal.
      *
      * @param idade Idade em meses (não pode ser negativa).
-     * @throws IllegalArgumentException se a idade for inválida.
+     * @throws DadosInvalidosException se a idade for inválida.
      */
     public void setIdade(int idade) {
         if (idade < 0) {
-            throw new IllegalArgumentException("A idade não pode ser negativa.");
+            throw new DadosInvalidosException("A idade não pode ser negativa.");
         }
         this.idade = idade;
     }

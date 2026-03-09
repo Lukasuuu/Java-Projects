@@ -14,7 +14,9 @@ import persistence.AmbienteDB;
  *
  * A interface Swing chama este service, e o service chama o AmbienteDB.
  *
- * @author Lucas
+ * @author Lucas Gonçalves
+ * @version 1.0
+ * @since 2026-03-06
  */
 public class AmbienteService {
     /** Objeto responsável por executar SQL no banco. */

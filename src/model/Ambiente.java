@@ -3,11 +3,19 @@ package model;
 import java.time.LocalDateTime;
 
 /**
- * Classe Ambiente - representa as condições climáticas de um local em uma data
- * específica. Contém informações como temperatura, umidade, local e data de
- * registo.
- *
- * @author Lucas
+ * Representa as condições ambientais registadas.
+ * 
+ * <p>Armazena dados de temperatura e umidade de uma localização
+ * específica em um determinado momento.</p>
+ * 
+ * <p>Estas informações são utilizadas para calcular o ITU
+ * (Índice de Temperatura e Umidade) e avaliar o conforto
+ * térmico dos bovinos.</p>
+ * 
+ * @author Lucas Gonçalves
+ * @version 1.0
+ * @since 2026-03-06
+ * @see Avaliacao
  */
 public class Ambiente {
 

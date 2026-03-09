@@ -6,7 +6,22 @@ package exception;
  * Exemplo: banco offline, falha de autenticação, erro de driver, etc.
  * Esta exceção herdara de ProjetoException.
  * 
- * @author Lucas
+ * <p>Encapsula exceções SQL ({@link java.sql.SQLException})
+ * fornecendo mensagens mais claras ao utilizador.</p>
+ * 
+ * <p>Exemplo de uso:
+ * <pre>
+ * try {
+ *     conexao = Conexao.getConexao();
+ * } catch (SQLException e) {
+ *     throw new ConexaoBDException("Falha na conexão", e);
+ * }
+ * </pre>
+ * </p>
+ * 
+ * @author Lucas Gonçalves
+ * @version 1.0
+ * @since 2026-03-06
  */
 public class ConexaoBDException extends ProjetoException {
 

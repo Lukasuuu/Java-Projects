@@ -3,20 +3,36 @@ package model;
 import java.time.LocalDateTime;
 
 /**
- * Classe Avaliacao - representa o resultado do cálculo do ITU (Índice de
- * Temperatura e Umidade) para um bovino num dado ambiente.
- *
- * Fórmula utilizada:
- *
- * ITU = (0.8 × temperatura) + ((umidade / 100) × (temperatura - 14.4)) + 46.4
- *
- *
- * Classificação do resultado:
- *
- * ITU menor que 72 → CONFORTO ITU entre 72 e 79 → ALERTA ITU maior ou igual a
- * 79 → ESTRESSE
- *
- * @author Lucas
+ * Representa uma avaliação de conforto térmico de um bovino.
+ * 
+ * <p>Contém o resultado do cálculo do ITU (Índice de Temperatura
+ * e Umidade) para um bovino específico em condições ambientais
+ * específicas.</p>
+ * 
+ * <p>Fórmula do ITU:
+ * <pre>
+ * ITU = 0.8 × T + (UR/100) × (T - 14.4) + 46.4
+ * </pre>
+ * Onde:
+ * <ul>
+ *   <li>T = temperatura em °C</li>
+ *   <li>UR = umidade relativa em %</li>
+ * </ul>
+ * </p>
+ * 
+ * <p>Classificação do resultado:
+ * <ul>
+ *   <li>ITU &lt; 72: CONFORTO</li>
+ *   <li>72 ≤ ITU &lt; 79: ALERTA</li>
+ *   <li>ITU ≥ 79: ESTRESSE</li>
+ * </ul>
+ * </p>
+ * 
+ * @author Lucas Gonçalves
+ * @version 1.0
+ * @since 2026-03-06
+ * @see Bovino
+ * @see Ambiente
  */
 public class Avaliacao {
 

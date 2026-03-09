@@ -11,16 +11,26 @@ import model.Animal;
 import model.Bovino;
 
 /**
- * Classe AnimalDB - Acesso à base de dados para registo e consulta de animais
- * do tipo bovino.
- *
+ * DAO (Data Access Object) para gestão de animais na base de dados.
+ * 
+ * <p>Responsável por todas as operações CRUD (Create, Read, Update, Delete)
+ * relacionadas à tabela animal e bovino.</p>
+ * 
+ * <p>Utiliza JDBC para comunicação com MySQL. As operações de INSERT
+ * e UPDATE utilizam transações para garantir consistência entre as
+ * tabelas animal (PAI) e bovino (FILHO).</p>
+ * 
  * Schema utilizado:
  *
  * Animal (id, nome, peso, idade)
  * Bovino (id, animal_id, raca, linhagem, producao_leite)
  * vw_bovinos_completos: junta animal + bovino
- *
- * @author Lucas
+ * 
+ * @author Lucas Gonçalves
+ * @version 1.0
+ * @since 2026-03-06
+ * @see Bovino
+ * @see Conexao
  */
 public class AnimalDB {
 

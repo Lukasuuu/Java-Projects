@@ -15,7 +15,9 @@ import exception.ConexaoBDException;
  * Faz JOIN com a tabela "animal" para trazer os dados completos
  * do bovino numa só consulta.
  *
- * @author Lucas
+ * @author Lucas Gonçalves
+ * @version 1.0
+ * @since 2026-03-06
  */
 public class BovinoDB {
 

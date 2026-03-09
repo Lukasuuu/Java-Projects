@@ -29,7 +29,9 @@ import persistence.AvaliacaoDB;
  * 72 menor ou igual ITU e menor que 79 ALERTA (atencao);
  * ITU maior ou igual a 79 PERIGO.
  *
- * @author Lucas
+ * @author Lucas Gonçalves
+ * @version 1.0
+ * @since 2026-03-06
  */
 public class AvaliacaoService {
 

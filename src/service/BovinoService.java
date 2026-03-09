@@ -8,7 +8,9 @@ import persistence.BovinoDB;
 /**
  * Classe BovinoService - regras de negócio relacionadas aos bovinos.
  *
- * @author Lucas
+ * @author Lucas Gonçalves
+ * @version 1.0
+ * @since 2026-03-06
  */
 public class BovinoService {
 

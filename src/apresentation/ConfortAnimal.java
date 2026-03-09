@@ -15,18 +15,32 @@ import service.AvaliacaoService;
 import service.BovinoService;
 
 /**
-* ConfortAnimal – Sistema de Gestão de Conforto Térmico Animal
-* 
-* Aplicação Java desktop para monitorização bioclimática de bovinos leiteiros e de corte
-* Implementação de herança OOP (Animal como classe base, Bovino como especialização)
-* Registro de variáveis climáticas (temperatura e umidade relativa) por localização
-* Geração automática de avaliações com cálculo do ITU segundo fórmula bioclimática
-* Sistema visual de alertas baseado em thresholds: menor que 72 (Conforto), entre 72 e 79 (Alerta), maior e igual que 79 (Estresse)
-* Arquitetura em três camadas com separação de responsabilidades (MVC adaptado)
-* Gestão completa de dados (Create, Read, Update, Delete) com validação de integridade
-* Tratamento robusto de exceções com classes personalizadas (DadosInvalidosException, ConexaoBDException)
-* 
- * @author Lucas
+ * Janela principal do sistema ConfortAnimal.
+ * 
+ * <p>Interface gráfica para gestão de avaliação de conforto térmico
+ * de bovinos através do cálculo do ITU (Índice de Temperatura e Umidade).</p>
+ * 
+ * <p>Funcionalidades principais:
+ * <ul>
+ *   <li>Cadastro e gestão de bovinos</li>
+ *   <li>Registro de condições ambientais</li>
+ *   <li>Geração automática de avaliações</li>
+ *   <li>Visualização de histórico</li>
+ * </ul>
+ * </p>
+ * 
+ * <p>Estrutura da interface:
+ * <ul>
+ *   <li>Menu superior: Home / Dados / Logout</li>
+ *   <li>Aba Animal: gestão de bovinos</li>
+ *   <li>Aba Ambiente: gestão de condições climáticas de determinado ambiente</li>
+ *   <li>Aba Avaliações: resultados do ITU</li>
+ * </ul>
+ * </p>
+ * 
+ * @author Lucas Gonçalves
+ * @version 1.0
+ * @since 2026-03-06
  */
 public class ConfortAnimal extends javax.swing.JFrame {
 
