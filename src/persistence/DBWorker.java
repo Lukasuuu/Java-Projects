@@ -1,5 +1,5 @@
+
 package persistence;
-import model.Animal;
 
 import java.sql.*;
 
@@ -59,19 +59,6 @@ public class DBWorker {
      */
     public int setDados(String sql) throws SQLException {
         return st.executeUpdate(sql);
-    }
-
-    /**
-     * Insere um animal na base de dados com apenas o nome.
-     * Este método é apenas ilustrativo.
-     * 
-     * @param animal Objeto Animal com o nome preenchido.
-     * @return true se a inserção for bem-sucedida.
-     * @throws SQLException se ocorrer erro na execução.
-     */
-    public boolean guardar(Animal animal) throws SQLException {
-        String sql = "INSERT INTO animal (nome) VALUES ('" + animal.getNome() + "')";
-        return setDados(sql) > 0;
     }
 
     /**

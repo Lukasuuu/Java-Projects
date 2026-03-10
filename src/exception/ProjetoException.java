@@ -5,6 +5,7 @@ package exception;
  * @author Lucas Gonçalves
  * @version 1.0
  * @since 2026-03-06
+ * @see RuntimeException
  */
 public class ProjetoException extends RuntimeException {
 

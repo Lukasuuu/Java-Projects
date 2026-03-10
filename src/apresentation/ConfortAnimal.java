@@ -1,3 +1,4 @@
+
 package apresentation;
 
 import exception.ConexaoBDException;
@@ -6,13 +7,14 @@ import exception.ProjetoException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import model.Bovino;
 import model.Ambiente;
 import model.Avaliacao;
-import service.AnimalService;
+import model.Bovino;
 import service.AmbienteService;
+import service.AnimalService;
 import service.AvaliacaoService;
 import service.BovinoService;
+
 
 /**
  * Janela principal do sistema ConfortAnimal.
@@ -73,7 +75,6 @@ public class ConfortAnimal extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        cardHome = new javax.swing.JPanel();
         cardAvaliacoes = new javax.swing.JPanel();
         panelFormAvaliacoes = new javax.swing.JPanel();
         lbAmbientes = new javax.swing.JLabel();
@@ -114,6 +115,9 @@ public class ConfortAnimal extends javax.swing.JFrame {
         btnListarAnimal = new javax.swing.JButton();
         Animal = new javax.swing.JScrollPane();
         AnimalTable = new javax.swing.JTable();
+        cardHome = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        lbHome = new javax.swing.JLabel();
         MenuBar = new javax.swing.JMenuBar();
         Home = new javax.swing.JMenu();
         Dados = new javax.swing.JMenu();
@@ -127,19 +131,6 @@ public class ConfortAnimal extends javax.swing.JFrame {
         getContentPane().setLayout(new java.awt.CardLayout());
 
         jPanel1.setLayout(new java.awt.CardLayout());
-
-        javax.swing.GroupLayout cardHomeLayout = new javax.swing.GroupLayout(cardHome);
-        cardHome.setLayout(cardHomeLayout);
-        cardHomeLayout.setHorizontalGroup(
-            cardHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1322, Short.MAX_VALUE)
-        );
-        cardHomeLayout.setVerticalGroup(
-            cardHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 566, Short.MAX_VALUE)
-        );
-
-        jPanel1.add(cardHome, "HOME");
 
         lbAmbientes.setText("Selecionar Ambiente: ");
 
@@ -187,7 +178,7 @@ public class ConfortAnimal extends javax.swing.JFrame {
                 .addGroup(panelFormAvaliacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnListarAvaliacoes)
                     .addComponent(btnGerarAvaliacoes))
-                .addContainerGap(482, Short.MAX_VALUE))
+                .addContainerGap(1568, Short.MAX_VALUE))
         );
 
         cbAmbiente.getAccessibleContext().setAccessibleName("");
@@ -212,17 +203,17 @@ public class ConfortAnimal extends javax.swing.JFrame {
             .addGroup(cardAvaliacoesLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(Avaliacoes, javax.swing.GroupLayout.PREFERRED_SIZE, 1235, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(89, Short.MAX_VALUE))
+                .addContainerGap(404, Short.MAX_VALUE))
             .addGroup(cardAvaliacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(cardAvaliacoesLayout.createSequentialGroup()
                     .addContainerGap()
                     .addComponent(panelFormAvaliacoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(509, Short.MAX_VALUE)))
+                    .addContainerGap(824, Short.MAX_VALUE)))
         );
         cardAvaliacoesLayout.setVerticalGroup(
             cardAvaliacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, cardAvaliacoesLayout.createSequentialGroup()
-                .addContainerGap(106, Short.MAX_VALUE)
+                .addContainerGap(1192, Short.MAX_VALUE)
                 .addComponent(Avaliacoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(41, 41, 41))
             .addGroup(cardAvaliacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -340,14 +331,14 @@ public class ConfortAnimal extends javax.swing.JFrame {
             .addGroup(cardAmbienteLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(panelFormAmbiente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(321, Short.MAX_VALUE))
         );
         cardAmbienteLayout.setVerticalGroup(
             cardAmbienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(cardAmbienteLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(panelFormAmbiente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(58, Short.MAX_VALUE))
+                .addContainerGap(1138, Short.MAX_VALUE))
         );
 
         jPanel1.add(cardAmbiente, "AMBIENTE");
@@ -448,7 +439,7 @@ public class ConfortAnimal extends javax.swing.JFrame {
                                 .addComponent(lbRaca)
                                 .addGap(18, 18, 18)
                                 .addComponent(txtRaca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 410, Short.MAX_VALUE)
                                 .addComponent(lbLinhagem)
                                 .addGap(18, 18, 18)
                                 .addComponent(cbLinhagem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -506,11 +497,46 @@ public class ConfortAnimal extends javax.swing.JFrame {
             cardAnimalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(cardAnimalLayout.createSequentialGroup()
                 .addComponent(panelFormAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 1084, Short.MAX_VALUE))
         );
 
         jPanel1.add(cardAnimal, "ANIMAL");
         cardAnimal.getAccessibleContext().setAccessibleName("");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        lbHome.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/ConfortAnimal.png"))); // NOI18N
+        lbHome.setToolTipText("");
+
+        javax.swing.GroupLayout cardHomeLayout = new javax.swing.GroupLayout(cardHome);
+        cardHome.setLayout(cardHomeLayout);
+        cardHomeLayout.setHorizontalGroup(
+            cardHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(cardHomeLayout.createSequentialGroup()
+                .addComponent(lbHome)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 0, 0))
+        );
+        cardHomeLayout.setVerticalGroup(
+            cardHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(cardHomeLayout.createSequentialGroup()
+                .addGroup(cardHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbHome, javax.swing.GroupLayout.PREFERRED_SIZE, 463, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+
+        jPanel1.add(cardHome, "HOME");
 
         getContentPane().add(jPanel1, "card2");
 
@@ -1201,7 +1227,9 @@ private void mostrarCard(String nomeCard) {
     private javax.swing.JComboBox<String> cbAmbiente;
     private javax.swing.JComboBox<String> cbLinhagem;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel lbAmbientes;
+    private javax.swing.JLabel lbHome;
     private javax.swing.JLabel lbIdade;
     private javax.swing.JLabel lbLinhagem;
     private javax.swing.JLabel lbLocal;

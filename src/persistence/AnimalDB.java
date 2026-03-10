@@ -1,3 +1,4 @@
+
 package persistence;
 
 import exception.ConexaoBDException;
@@ -57,7 +58,7 @@ public class AnimalDB {
         final String sqlAnimal = "INSERT INTO animal (nome, peso, idade)" + "VALUES (?, ?, ?)";
 
         // SQL de inserção na tabela bovino (dados específicos + FK animal_id)
-        final String sqlBovino = "INSERT INTO bovino (animal_id, raca, linhagem, producao_leite" + "VALUES (?, ?, ?, ?)";
+        final String sqlBovino = "INSERT INTO bovino (animal_id, raca, linhagem, producao_leite)" + "VALUES (?, ?, ?, ?)";
 
         try ( Connection con = Conexao.getConexao()) {
 

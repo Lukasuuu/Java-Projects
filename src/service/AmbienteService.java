@@ -3,12 +3,10 @@ package service;
 
 import exception.ConexaoBDException;
 import exception.DadosInvalidosException;
-import exception.ProjetoException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import model.Ambiente;
 import persistence.AmbienteDB;
+
 
 /**
  * Classe AmbienteService - Regras e validações do Ambiente.

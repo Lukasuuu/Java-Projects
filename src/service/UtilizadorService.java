@@ -2,8 +2,8 @@
 package service;
 
 import exception.ConexaoBDException;
-import persistence.UtilizadorDB;
 import model.Utilizador;
+import persistence.UtilizadorDB;
 
 /**
   * Classe UsuarioService - Camada de serviço para regras de negócio do utilizador.

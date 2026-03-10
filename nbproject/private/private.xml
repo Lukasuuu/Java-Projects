@@ -2,19 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Users/luc__/Documents/NetBeansProjects/Java-Projects/src/persistence/DBWorker.java</file>
-            <file>file:/C:/Users/luc__/Documents/NetBeansProjects/Java-Projects/src/service/AnimalService.java</file>
-            <file>file:/C:/Users/luc__/Documents/NetBeansProjects/Java-Projects/src/persistence/AvaliacaoDB.java</file>
-            <file>file:/C:/Users/luc__/Documents/NetBeansProjects/Java-Projects/src/apresentation/ConfortAnimal.java</file>
-            <file>file:/C:/Users/luc__/Documents/NetBeansProjects/Java-Projects/src/service/UtilizadorService.java</file>
-            <file>file:/C:/Users/luc__/Documents/NetBeansProjects/Java-Projects/src/exception/ConexaoBDException.java</file>
-            <file>file:/C:/Users/luc__/Documents/NetBeansProjects/Java-Projects/src/persistence/UtilizadorDB.java</file>
-            <file>file:/C:/Users/luc__/Documents/NetBeansProjects/Java-Projects/src/persistence/AmbienteDB.java</file>
-            <file>file:/C:/Users/luc__/Documents/NetBeansProjects/Java-Projects/src/service/AvaliacaoService.java</file>
-            <file>file:/C:/Users/luc__/Documents/NetBeansProjects/Java-Projects/src/model/Utilizador.java</file>
-            <file>file:/C:/Users/luc__/Documents/NetBeansProjects/Java-Projects/src/model/Bovino.java</file>
-            <file>file:/C:/Users/luc__/Documents/NetBeansProjects/Java-Projects/src/apresentation/Login.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>
